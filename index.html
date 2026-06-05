@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Elite Language Craft</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=Montserrat:wght@400;600;900&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1a1a18;--muted:#6b6b66;--faint:#e8e6df;--bg:#f9f8f4;--white:#fff;
+  --accent-light:#f0ede3;
+  --serif:'DM Serif Display',Georgia,serif;
+  --sans:'DM Sans',sans-serif;
+  --radius:10px;--max:1100px;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.65;-webkit-text-size-adjust:100%}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;height:auto;display:block}
+.page{display:none}.page.active{display:block}
+
+nav{position:sticky;top:0;z-index:100;background:rgba(249,248,244,0.95);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--faint);padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:'Montserrat',sans-serif;cursor:pointer;flex-shrink:0;line-height:1;display:flex;align-items:baseline;gap:.35rem}
+.logo-elite{font-size:1.75rem;font-weight:900;letter-spacing:-.02em;color:var(--ink)}
+.logo-elite .logo-i{font-size:1.45rem;font-weight:900;text-transform:lowercase}
+.logo-sub{font-size:.82rem;font-weight:600;letter-spacing:.01em;color:var(--ink)}
+.nav-links{display:flex;gap:1.5rem;font-size:.82rem}
+.nav-links a{color:var(--muted);transition:color .2s;cursor:pointer;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:var(--ink)}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.ham span{display:block;width:22px;height:1.5px;background:var(--ink);transition:.3s}
+.ham.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:56px;left:0;right:0;background:var(--white);border-bottom:0.5px solid var(--faint);z-index:99;padding:1rem 1.25rem 1.25rem;flex-direction:column;gap:.1rem;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{padding:.75rem 0;font-size:.95rem;color:var(--ink);border-bottom:0.5px solid var(--faint);cursor:pointer}
+.mobile-menu a:last-child{border-bottom:none}
+
+.hero-wrap{position:relative;overflow:hidden;background:#1a1a18;min-height:100svh;display:flex;align-items:center}
+.hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=1600&q=80');background-size:cover;background-position:center;opacity:0.22}
+.hero-content{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:4rem 1.5rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;width:100%}
+.hero-tag{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:1.25rem}
+.hero h1{font-family:var(--serif);font-size:3.5rem;line-height:1.08;margin-bottom:1.25rem;color:#fff}
+.hero h1 em{font-style:italic;color:rgba(255,255,255,.45)}
+.hero p{font-size:.95rem;color:rgba(255,255,255,.6);max-width:400px;line-height:1.9;margin-bottom:2.25rem}
+.btn{display:inline-block;padding:.65rem 1.4rem;border:0.5px solid var(--ink);font-size:.875rem;font-weight:500;cursor:pointer;transition:background .2s,color .2s;background:transparent;border-radius:var(--radius)}
+.btn:hover{background:var(--ink);color:var(--white)}
+.btn-fill{background:var(--ink);color:var(--white)}
+.btn-fill:hover{background:#333}
+.btn-light{border-color:rgba(255,255,255,.4);color:#fff}
+.btn-light:hover{background:rgba(255,255,255,.1)}
+.btn-white{background:#fff;color:var(--ink);border-color:#fff}
+.btn-white:hover{background:#eee}
+
+.hero-mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:.6rem;height:400px}
+.mosaic-cell{border-radius:12px;overflow:hidden;position:relative}
+.mosaic-cell img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%)}
+.mosaic-cell .mc-label{position:absolute;bottom:0;left:0;right:0;padding:.5rem .75rem;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);color:#fff;font-size:.72rem}
+.mosaic-cell .mc-label strong{display:block;font-weight:500;font-size:.8rem}
+.mosaic-cell:first-child{grid-row:span 2}
+
+/* ABOUT STRIP */
+.about-strip{background:var(--ink);color:var(--white);padding:5rem 1.5rem}
+.about-strip-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr 1.5fr;gap:5rem;align-items:center}
+.about-strip h2{font-family:var(--serif);font-size:2.2rem;line-height:1.15}
+.about-strip h2 em{font-style:italic;opacity:.45}
+.about-strip p{font-size:.9rem;line-height:1.85;opacity:.7;margin-bottom:1rem}
+.stats-row{display:flex;gap:2rem;margin-top:2rem;flex-wrap:wrap}
+.stat-item .num{font-family:var(--serif);font-size:2rem}
+.stat-item .label{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;opacity:.4;margin-top:.2rem}
+
+.photo-strip{max-width:var(--max);margin:0 auto;padding:4rem 1.5rem}
+.photo-strip-title{font-family:var(--serif);font-size:1.8rem;margin-bottom:0}
+.photo-row{display:flex;gap:.85rem;overflow-x:auto;padding-bottom:.5rem;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}
+.photo-row::-webkit-scrollbar{height:3px}
+.photo-row::-webkit-scrollbar-thumb{background:var(--faint)}
+.photo-thumb{flex:0 0 150px;border-radius:10px;overflow:hidden;cursor:pointer;position:relative;scroll-snap-align:start}
+.photo-thumb img{width:100%;height:190px;object-fit:cover;filter:grayscale(15%)}
+.photo-thumb .pt-name{position:absolute;bottom:0;left:0;right:0;padding:.5rem .7rem;background:linear-gradient(to top,rgba(0,0,0,.75),transparent);color:#fff;font-size:.73rem;font-weight:500}
+
+.section{max-width:var(--max);margin:0 auto;padding:4rem 1.5rem}
+.section-label{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem}
+.section-title{font-family:var(--serif);font-size:2rem;line-height:1.2;margin-bottom:.65rem}
+.section-sub{font-size:.9rem;color:var(--muted);max-width:500px;line-height:1.8;margin-bottom:2.5rem}
+
+.translators-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.1rem}
+.translator-card{background:var(--white);border:0.5px solid var(--faint);border-radius:14px;overflow:hidden;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s}
+.translator-card:hover{border-color:#bbb;transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.07)}
+.tc-img{width:100%;height:190px;object-fit:cover;object-position:top;display:block;filter:grayscale(10%)}
+.tc-body{padding:1.1rem}
+.tc-name{font-weight:500;font-size:.95rem;margin-bottom:.2rem}
+.tc-role{font-size:.78rem;color:var(--muted);margin-bottom:.65rem}
+.tc-langs{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.65rem}
+.pill{font-size:.68rem;padding:.2rem .55rem;background:var(--accent-light);border-radius:20px;color:var(--ink)}
+.tc-spec{font-size:.75rem;color:var(--muted);line-height:1.6}
+.view-link{display:inline-flex;align-items:center;gap:.3rem;font-size:.75rem;margin-top:.75rem;color:var(--muted);transition:color .2s}
+.translator-card:hover .view-link{color:var(--ink)}
+
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.9rem}
+.spec-card{background:var(--white);border:0.5px solid var(--faint);border-radius:var(--radius);padding:1.1rem}
+.spec-icon{font-size:1.2rem;margin-bottom:.65rem}
+.spec-name{font-size:.85rem;font-weight:500;margin-bottom:.25rem}
+.spec-desc{font-size:.72rem;color:var(--muted)}
+
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.1rem}
+.tcard{background:var(--white);border:0.5px solid var(--faint);border-radius:14px;padding:1.35rem}
+.tcard-quote{font-family:var(--serif);font-size:1rem;line-height:1.65;margin-bottom:1.1rem;font-style:italic;color:var(--ink)}
+.tcard-author{display:flex;align-items:center;gap:.75rem}
+.tcard-img{width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.tcard-name{font-size:.82rem;font-weight:500}
+.tcard-org{font-size:.72rem;color:var(--muted)}
+
+.contact-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:start}
+.contact-info h3{font-family:var(--serif);font-size:1.6rem;margin-bottom:.9rem}
+.contact-info p{font-size:.88rem;color:var(--muted);line-height:1.85;margin-bottom:1.75rem}
+.contact-item{display:flex;align-items:center;gap:.65rem;margin-bottom:.8rem;font-size:.85rem;color:var(--muted)}
+.contact-form{display:flex;flex-direction:column;gap:.8rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.form-group{display:flex;flex-direction:column;gap:.3rem}
+.form-group label{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.form-group input,.form-group select,.form-group textarea{background:var(--white);border:0.5px solid #ccc;border-radius:var(--radius);padding:.6rem .85rem;font-family:var(--sans);font-size:.9rem;color:var(--ink);outline:none;transition:border-color .2s;width:100%}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--ink)}
+.form-group textarea{resize:vertical;min-height:95px}
+
+.profile-hero{max-width:var(--max);margin:0 auto;padding:2.5rem 1.5rem 3.5rem;display:grid;grid-template-columns:260px 1fr;gap:3rem;align-items:start}
+.profile-photo{width:100%;border-radius:14px;overflow:hidden;aspect-ratio:3/4}
+.profile-photo img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;filter:grayscale(10%)}
+.profile-name{font-family:var(--serif);font-size:2.4rem;line-height:1.1;margin-bottom:.4rem}
+.profile-role{font-size:.9rem;color:var(--muted);margin-bottom:1rem}
+.profile-langs{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.25rem}
+.profile-bio{font-size:.9rem;color:var(--muted);max-width:520px;line-height:1.95;margin-bottom:1.75rem}
+.profile-body{max-width:var(--max);margin:0 auto;padding:0 1.5rem 4.5rem;display:grid;grid-template-columns:1fr 280px;gap:2.5rem}
+.profile-section h3{font-family:var(--serif);font-size:1.15rem;margin-bottom:.9rem;padding-bottom:.45rem;border-bottom:0.5px solid var(--faint)}
+.profile-section+.profile-section{margin-top:2.25rem}
+.pei{padding:.8rem 0;border-bottom:0.5px solid var(--faint)}
+.pei:last-child{border-bottom:none}
+.pei-top{display:flex;justify-content:space-between;align-items:start;margin-bottom:.2rem;gap:.5rem}
+.pei-org{font-weight:500;font-size:.88rem}
+.pei-period{font-size:.72rem;color:var(--muted);flex-shrink:0}
+.pei-role{font-size:.78rem;color:var(--muted)}
+.sidebar-card{background:var(--white);border:0.5px solid var(--faint);border-radius:var(--radius);padding:1.1rem;margin-bottom:.9rem}
+.sidebar-card h4{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem}
+.cert-item{font-size:.8rem;padding:.3rem 0;border-bottom:0.5px solid var(--faint);display:flex;gap:.45rem}
+.cert-item:last-child{border-bottom:none}
+.cert-dot{width:5px;height:5px;border-radius:50%;background:var(--ink);margin-top:.5rem;flex-shrink:0}
+.tools-list{display:flex;flex-wrap:wrap;gap:.4rem}
+
+.trusted-section{background:var(--white);border-top:0.5px solid var(--faint);border-bottom:0.5px solid var(--faint);padding:3.5rem 0}
+.trusted-inner{max-width:var(--max);margin:0 auto;padding:0 1.5rem}
+.trusted-header{text-align:center;margin-bottom:2.25rem}
+.trusted-header .section-label{display:block;text-align:center}
+.trusted-header h2{font-family:var(--serif);font-size:1.85rem;margin-top:.35rem}
+.trusted-header p{font-size:.88rem;color:var(--muted);margin-top:.4rem}
+.marquee-wrap{position:relative;overflow:hidden}
+.marquee-wrap::before,.marquee-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
+.marquee-wrap::before{left:0;background:linear-gradient(to right,var(--white),transparent)}
+.marquee-wrap::after{right:0;background:linear-gradient(to left,var(--white),transparent)}
+.marquee-track{display:flex;gap:1.1rem;width:max-content;animation:marquee 28s linear infinite}
+.marquee-track:hover{animation-play-state:paused}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.lsp-card{flex:0 0 130px;background:var(--bg);border:0.5px solid var(--faint);border-radius:12px;padding:1rem .85rem;display:flex;flex-direction:column;align-items:center;gap:.55rem}
+.lsp-name{font-size:.75rem;font-weight:500;text-align:center;color:var(--ink)}
+.lsp-type{font-size:.65rem;color:var(--muted);text-align:center}
+
+.carousel-section{max-width:var(--max);margin:0 auto;padding:4rem 1.5rem}
+.carousel-wrap{position:relative}
+.carousel-track-outer{overflow:hidden;border-radius:14px}
+.carousel-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.carousel-slide{flex:0 0 100%;padding:0 .25rem;box-sizing:border-box}
+.cslide-inner{background:var(--white);border:0.5px solid var(--faint);border-radius:14px;padding:2rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center}
+.cslide-qmark{font-family:var(--serif);font-size:4rem;line-height:1;color:var(--faint);margin-bottom:.35rem}
+.cslide-quote{font-family:var(--serif);font-size:1.2rem;line-height:1.65;font-style:italic;color:var(--ink);margin-bottom:1.5rem}
+.cslide-author{display:flex;align-items:center;gap:.9rem}
+.cslide-img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.cslide-name{font-weight:500;font-size:.88rem}
+.cslide-org{font-size:.75rem;color:var(--muted)}
+.cslide-side{display:flex;flex-direction:column;align-items:center;gap:.6rem;min-width:140px}
+.cslide-side-img{width:100%;height:180px;object-fit:cover;border-radius:10px;filter:grayscale(15%)}
+.cslide-side-label{font-size:.72rem;color:var(--muted);text-align:center}
+.carousel-controls{display:flex;align-items:center;justify-content:center;gap:1.1rem;margin-top:1.75rem}
+.carousel-btn{width:38px;height:38px;border-radius:50%;border:0.5px solid var(--faint);background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:background .2s,border-color .2s}
+.carousel-btn:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.carousel-dots{display:flex;gap:.45rem}
+.carousel-dot{width:6px;height:6px;border-radius:50%;background:var(--faint);cursor:pointer;transition:background .2s,transform .2s}
+.carousel-dot.active{background:var(--ink);transform:scale(1.3)}
+
+.fields-section{background:var(--ink);padding:4.5rem 1.5rem}
+.fields-inner{max-width:var(--max);margin:0 auto}
+.fields-header{display:flex;justify-content:space-between;align-items:end;margin-bottom:2.25rem;gap:1.5rem}
+.fields-header h2{font-family:var(--serif);font-size:1.9rem;color:#fff;line-height:1.2}
+.fields-header p{font-size:.85rem;color:rgba(255,255,255,.5);max-width:260px;text-align:right;line-height:1.7}
+.fields-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem}
+.field-card{background:rgba(255,255,255,.05);border:0.5px solid rgba(255,255,255,.1);border-radius:12px;padding:1.25rem;transition:background .2s,border-color .2s}
+.field-card:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.22)}
+.field-icon{font-size:1.35rem;margin-bottom:.8rem}
+.field-name{font-size:.85rem;font-weight:500;color:#fff;margin-bottom:.35rem}
+.field-desc{font-size:.72rem;color:rgba(255,255,255,.45);line-height:1.6}
+.field-langs{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.75rem}
+.field-pill{font-size:.63rem;padding:.18rem .5rem;background:rgba(255,255,255,.1);border-radius:20px;color:rgba(255,255,255,.6)}
+
+/* ===== LANGUAGE MAP ===== */
+.lang-map-section{background:#0f0f0d;padding:5.5rem 1.5rem}
+.lms-inner{max-width:var(--max);margin:0 auto}
+.lms-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;gap:1.5rem;flex-wrap:wrap}
+.lms-title{font-family:var(--serif);font-size:2.2rem;color:#fff;line-height:1.15;margin-top:.3rem}
+.lms-title em{font-style:italic;opacity:.4}
+.lms-sub{font-size:.88rem;color:rgba(255,255,255,.45);margin-top:.6rem;max-width:460px;line-height:1.8}
+.lms-stats{display:flex;gap:2.25rem;flex-wrap:wrap}
+.lms-stat-num{font-family:var(--serif);font-size:2rem;color:#fff}
+.lms-stat-lbl{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:.12rem}
+.lms-canvas-wrap{position:relative;background:rgba(255,255,255,.03);border:0.5px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden}
+#homeMapCanvas{width:100%;display:block;cursor:default}
+#homeMapTip{position:absolute;background:rgba(8,8,7,.94);backdrop-filter:blur(12px);border:0.5px solid rgba(255,255,255,.15);border-radius:11px;padding:.75rem 1rem;font-size:.78rem;color:#fff;pointer-events:none;opacity:0;transition:opacity .15s;max-width:210px;line-height:1.7;z-index:10}
+#homeMapTip strong{font-weight:600;display:block;margin-bottom:.15rem}
+#homeMapTip span{color:rgba(255,255,255,.5);font-size:.72rem}
+#homeMapTip em{font-style:normal;color:#34d399;font-size:.72rem;display:block;margin-top:.2rem}
+.lms-legend{display:flex;flex-wrap:wrap;gap:1.25rem;margin-top:1.4rem}
+.lms-leg-item{display:flex;align-items:center;gap:.5rem;font-size:.74rem;color:rgba(255,255,255,.4)}
+.lms-leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;display:inline-block}
+.lms-lang-pills{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1.5rem}
+.lms-lang-pill{border:0.5px solid rgba(255,255,255,.12);border-radius:20px;padding:.32rem .85rem;font-size:.74rem;color:rgba(255,255,255,.55);cursor:pointer;transition:background .2s,border-color .2s,color .2s;background:transparent;display:flex;align-items:center;gap:.4rem}
+.lms-lang-pill:hover,.lms-lang-pill.active{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);color:#fff}
+.lms-dot-pill{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.lms-detail{margin-top:1.5rem;background:rgba(255,255,255,.06);border:0.5px solid rgba(255,255,255,.13);border-radius:13px;padding:1.35rem;display:none}
+.lms-detail-head{display:flex;align-items:center;gap:.8rem;margin-bottom:.65rem;flex-wrap:wrap}
+.lms-detail-name{color:#fff;font-weight:500;font-size:.98rem}
+.lms-detail-count{font-size:.78rem;color:rgba(255,255,255,.45)}
+.lms-detail-countries{font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.75;margin-bottom:.85rem}
+
+.breadcrumb-bar{background:var(--white);border-bottom:0.5px solid var(--faint)}
+.breadcrumb{max-width:var(--max);margin:0 auto;padding:.75rem 1.5rem;display:flex;align-items:center;gap:.45rem;font-size:.75rem;color:var(--muted);flex-wrap:wrap}
+.breadcrumb a{color:var(--muted);cursor:pointer;transition:color .2s}
+.breadcrumb a:hover{color:var(--ink)}
+.breadcrumb .bc-sep{opacity:.35;font-size:.68rem}
+.breadcrumb .bc-current{color:var(--ink);font-weight:500}
+
+.page-hero{position:relative;overflow:hidden;background:#1a1a18;padding:4rem 1.5rem}
+.page-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.18}
+.page-hero-content{position:relative;z-index:2;max-width:var(--max);margin:0 auto}
+.page-hero-label{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.65rem}
+.page-hero-title{font-family:var(--serif);font-size:2.4rem;color:#fff;line-height:1.15;max-width:560px}
+.page-hero-sub{font-size:.9rem;color:rgba(255,255,255,.55);max-width:480px;line-height:1.8;margin-top:.75rem}
+
+footer{background:var(--ink);color:rgba(255,255,255,.4);font-size:.8rem;padding:3.5rem 1.5rem 2rem}
+.footer-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem}
+.footer-logo{font-family:'Montserrat',sans-serif;color:#fff;margin-bottom:.65rem;line-height:1.3;display:flex;align-items:baseline;gap:.35rem}
+.footer-logo-elite{font-size:1.75rem;font-weight:900;letter-spacing:-.02em}
+.footer-logo-elite .logo-i{font-size:1.45rem;font-weight:900;text-transform:lowercase}
+.footer-logo-sub{font-size:.82rem;font-weight:600;letter-spacing:.01em;color:rgba(255,255,255,.75)}
+.footer-desc{font-size:.8rem;line-height:1.8;opacity:.55}
+.footer-col h5{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.9rem}
+.footer-col a{display:block;font-size:.8rem;color:rgba(255,255,255,.5);margin-bottom:.45rem;cursor:pointer;transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:0.5px solid rgba(255,255,255,.1);padding-top:1.35rem;text-align:center;font-size:.72rem;opacity:.4}
+
+.cta-banner{background:var(--ink);border-radius:16px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-top:3rem}
+.cta-banner-title{font-family:var(--serif);font-size:1.55rem;color:#fff;margin-bottom:.4rem;line-height:1.2}
+.cta-banner-sub{font-size:.88rem;color:rgba(255,255,255,.55);max-width:400px;line-height:1.75}
+
+@media(max-width:900px){
+  .hero-content{grid-template-columns:1fr;gap:2.5rem;padding:3.5rem 1.25rem 2.5rem}
+  .hero h1{font-size:2.8rem}
+  .about-strip-inner{grid-template-columns:1fr;gap:2.25rem}
+  .about-strip{padding:3.5rem 1.25rem}
+  .fields-header{flex-direction:column;align-items:start;gap:.75rem}
+  .fields-header p{text-align:left;max-width:100%}
+  .fields-grid{grid-template-columns:repeat(2,1fr);gap:.75rem}
+  .contact-wrap{grid-template-columns:1fr;gap:2.5rem}
+  .profile-hero{grid-template-columns:1fr;gap:1.75rem;padding:2rem 1.25rem 2.5rem}
+  .profile-photo{width:160px;border-radius:12px;aspect-ratio:auto}
+  .profile-name{font-size:2rem}
+  .profile-body{grid-template-columns:1fr;gap:1.5rem;padding:0 1.25rem 3.5rem}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:1.5rem}
+  .footer-inner>div:first-child{grid-column:1/-1}
+  .cslide-inner{grid-template-columns:1fr;gap:1.5rem}
+  .cslide-side{display:none}
+  .nav-links{display:none}
+  .ham{display:flex}
+  .page-hero-title{font-size:2rem}
+  .page-hero{padding:3rem 1.25rem}
+  .lms-top{flex-direction:column;align-items:flex-start;gap:1.5rem}
+  .hero-mosaic{height:280px;gap:.5rem}
+}
+@media(max-width:600px){
+  nav{padding:0 1rem;height:52px}
+  .hero-wrap{min-height:auto}
+  .hero-content{padding:3rem 1rem 2rem}
+  .hero h1{font-size:2.15rem}
+  .hero-mosaic{height:210px;gap:.4rem}
+  .about-strip{padding:2.75rem 1rem}
+  .about-strip h2{font-size:1.8rem}
+  .stats-row{gap:1.5rem}
+  .stat-item .num{font-size:1.75rem}
+  .photo-strip{padding:2.75rem 1rem}
+  .photo-thumb{flex:0 0 130px}
+  .photo-thumb img{height:165px}
+  .section{padding:2.75rem 1rem}
+  .section-title{font-size:1.7rem}
+  .translators-grid{grid-template-columns:1fr 1fr;gap:.75rem}
+  .tc-img{height:155px}
+  .tc-body{padding:.9rem}
+  .tc-name{font-size:.88rem}
+  .spec-grid{grid-template-columns:1fr 1fr;gap:.75rem}
+  .tgrid{grid-template-columns:1fr;gap:.85rem}
+  .form-row{grid-template-columns:1fr}
+  .profile-hero{padding:1.5rem 1rem 2rem}
+  .profile-name{font-size:1.75rem}
+  .profile-body{padding:0 1rem 2.75rem}
+  .fields-section{padding:3rem 1rem}
+  .fields-grid{grid-template-columns:1fr 1fr;gap:.65rem}
+  .field-card{padding:1rem}
+  .trusted-section{padding:2.75rem 0}
+  .marquee-wrap::before,.marquee-wrap::after{width:50px}
+  .carousel-section{padding:2.75rem 1rem}
+  .cslide-inner{padding:1.5rem}
+  .cslide-quote{font-size:1rem}
+  .page-hero{padding:2.5rem 1rem}
+  .page-hero-title{font-size:1.75rem}
+  footer{padding:2.75rem 1rem 1.5rem}
+  .cta-banner{padding:1.75rem;border-radius:14px}
+  .cta-banner-title{font-size:1.35rem}
+  .lang-map-section{padding:3.5rem 1rem}
+  .lms-title{font-size:1.8rem}
+  .lms-stats{gap:1.5rem}
+  .lms-stat-num{font-size:1.65rem}
+}
+@media(max-width:380px){
+  .hero h1{font-size:1.9rem}
+  .translators-grid{grid-template-columns:1fr}
+  .fields-grid{grid-template-columns:1fr}
+  .spec-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo" onclick="showPage('home')"><span class="logo-elite">EL<span class="logo-i">i</span>TE</span><span class="logo-sub">Language Craft</span></div>
+  <div class="nav-links">
+    <a onclick="showPage('home')" id="nav-home" class="active">Home</a>
+    <a onclick="showPage('translators')" id="nav-translators">Translators</a>
+    <a onclick="showPage('specializations')" id="nav-spec">Specializations</a>
+    <a onclick="showPage('testimonials')" id="nav-testimonials">Testimonials</a>
+    <a onclick="showPage('contact')" id="nav-contact">Contact</a>
+  </div>
+  <div class="ham" id="ham" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a onclick="navTo('home')">Home</a>
+  <a onclick="navTo('translators')">Translators</a>
+  <a onclick="navTo('specializations')">Specializations</a>
+  <a onclick="navTo('testimonials')">Testimonials</a>
+  <a onclick="navTo('contact')">Contact</a>
+</div>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero-wrap">
+    <div class="hero-bg"></div>
+    <div class="hero-content hero">
+      <div>
+        <div class="hero-tag">Translation Collective · Est. 2019</div>
+        <h1>Language is <em>craft,</em> not commodity.</h1>
+        <p>A collective of specialist translators committed to precision, cultural intelligence, and language that truly resonates.</p>
+        <div style="display:flex;gap:.85rem;flex-wrap:wrap">
+          <span class="btn btn-white" onclick="showPage('translators')">Meet the translators</span>
+          <span class="btn btn-light" onclick="showPage('contact')">Work with us</span>
+        </div>
+      </div>
+      <div class="hero-mosaic">
+        <div class="mosaic-cell"><img src="resources/chris02.jpg" alt=""/><div class="mc-label"><strong>Chris Ajayi</strong>Legal · Academic · IT</div></div>
+        <div class="mosaic-cell"><img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=300&q=80" alt=""/><div class="mc-label"><strong>Marie L.</strong>Legal · Finance</div></div>
+        <div class="mosaic-cell"><img src="resources/omotola01.png" alt=""/><div class="mc-label"><strong>Omotola O.</strong>Technical</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-strip">
+    <div class="about-strip-inner">
+      <div>
+        <div style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;opacity:.35;margin-bottom:1rem">About us</div>
+        <h2>Independent experts,<br><em>one shared standard.</em></h2>
+      </div>
+      <div>
+        <p>Elite Language Craft is not an agency. We are a group of independent professional translators who collaborate, share knowledge, and maintain a unified standard of quality.</p>
+        <p>We work across legal, academic, technical, and creative fields — delivering translations that carry meaning, not just words.</p>
+        <div class="stats-row">
+          <div class="stat-item"><div class="num counter" data-target="8" data-suffix="+">0+</div><div class="label">Translators</div></div>
+          <div class="stat-item"><div class="num counter" data-target="12" data-suffix="+">0+</div><div class="label">Languages</div></div>
+          <div class="stat-item"><div class="num counter" data-target="6" data-suffix="+">0+</div><div class="label">Yrs avg. exp.</div></div>
+          <div class="stat-item"><div class="num counter" data-target="20" data-suffix="+">0+</div><div class="label">Specializations</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="photo-strip">
+    <div class="section-label">The collective</div>
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem">
+      <div class="photo-strip-title">Meet our translators</div>
+      <span class="btn" style="font-size:.78rem;padding:.45rem 1rem" onclick="showPage('translators')">View all →</span>
+    </div>
+    <div class="photo-row" id="photo-row"></div>
+  </div>
+
+  <div class="section" style="padding-top:0">
+    <div class="translators-grid" id="home-translators"></div>
+    <div style="margin-top:1.75rem;text-align:center">
+      <span class="btn" onclick="showPage('translators')">View all translators →</span>
+    </div>
+  </div>
+
+  <div class="trusted-section">
+    <div class="trusted-inner">
+      <div class="trusted-header">
+        <span class="section-label">Partners & clients</span>
+        <h2>Trusted By</h2>
+        <p>Serving leading LSPs, agencies & platforms worldwide</p>
+      </div>
+    </div>
+    <div class="marquee-wrap"><div class="marquee-track" id="marquee-track"></div></div>
+  </div>
+
+  <div class="carousel-section">
+    <div class="section-label">Reviews</div>
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:2rem;flex-wrap:wrap;gap:.75rem">
+      <div class="section-title" style="margin-bottom:0">What clients say</div>
+      <span class="btn" style="font-size:.78rem;padding:.45rem 1rem" onclick="showPage('testimonials')">All reviews →</span>
+    </div>
+    <div class="carousel-wrap">
+      <div class="carousel-track-outer"><div class="carousel-track" id="carousel-track"></div></div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="c-prev">&#8592;</button>
+        <div class="carousel-dots" id="c-dots"></div>
+        <button class="carousel-btn" id="c-next">&#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="fields-section">
+    <div class="fields-inner">
+      <div class="fields-header">
+        <div>
+          <div style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.5rem">Expertise</div>
+          <h2>Fields of<br>Specialization</h2>
+        </div>
+        <p>Every translator holds deep subject-matter expertise — not just language fluency.</p>
+      </div>
+      <div class="fields-grid" id="fields-grid"></div>
+      <div style="margin-top:2.25rem;display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap">
+        <span class="btn" style="background:#fff;color:var(--ink);border-color:#fff;font-size:.875rem;padding:.75rem 1.6rem" onclick="showPage('translators')">Connect with a Translator →</span>
+        <span class="btn" style="border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.7);font-size:.875rem;padding:.75rem 1.6rem" onclick="showPage('specializations')">View all specializations</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LANGUAGE MAP ===== -->
+  <div class="lang-map-section">
+    <div class="lms-inner">
+      <div class="lms-top">
+        <div>
+          <div class="section-label" style="color:rgba(255,255,255,.38)">Global Reach</div>
+          <div class="lms-title">Language Map <em>& Coverage</em></div>
+          <div class="lms-sub">Hover a node to explore countries and active translators. Click to pin details. Pulses show active translation pairs across our collective.</div>
+        </div>
+        <div class="lms-stats">
+          <div><div class="lms-stat-num">10+</div><div class="lms-stat-lbl">Languages</div></div>
+          <div><div class="lms-stat-num">50+</div><div class="lms-stat-lbl">Countries</div></div>
+          <div><div class="lms-stat-num">30+</div><div class="lms-stat-lbl">Language Pairs</div></div>
+        </div>
+      </div>
+      <div class="lms-canvas-wrap">
+        <canvas id="homeMapCanvas"></canvas>
+        <div id="homeMapTip"></div>
+      </div>
+    
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-top:1.4rem">
+        <div class="lms-legend">
+          <div class="lms-leg-item"><span class="lms-leg-dot" style="background:#f5f5f0"></span>English (hub)</div>
+          <div class="lms-leg-item"><span class="lms-leg-dot" style="background:#f59e0b"></span>French</div>
+          <div class="lms-leg-item"><span class="lms-leg-dot" style="background:#34d399"></span>German</div>
+          <div class="lms-leg-item"><span class="lms-leg-dot" style="background:#60a5fa"></span>Italian</div>
+          <div class="lms-leg-item"><span class="lms-leg-dot" style="background:#f87171"></span>Spanish</div>
+          <div class="lms-leg-item" style="gap:.6rem"><span style="display:inline-block;width:20px;height:1px;border-top:1px dashed rgba(255,255,255,.3)"></span>Active pair</div>
+          <div class="lms-leg-item"><span class="lms-leg-dot" style="background:#34d399;box-shadow:0 0 5px #34d399"></span>Pulse = live flow</div>
+          <button onclick="showPage('specializations')" style="background:rgba(255,255,255,.07);border:0.5px solid rgba(255,255,255,.18);color:rgba(255,255,255,.7);padding:.28rem .85rem;border-radius:20px;font-size:.74rem;cursor:pointer;font-family:var(--sans);transition:background .2s,color .2s;white-space:nowrap" onmouseover="this.style.background='rgba(255,255,255,.14)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.07)';this.style.color='rgba(255,255,255,.7)'">+ More</button>
+        </div>
+      </div>
+      <div class="lms-detail" id="homeMapDetail"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TRANSLATORS -->
+<div class="page" id="page-translators">
+  <div class="breadcrumb-bar"><div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="bc-sep">›</span><span class="bc-current">Translators</span></div></div>
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1400&q=75')"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-label">The collective</div>
+      <div class="page-hero-title">Our translators</div>
+      <div class="page-hero-sub">Independent professionals, each with a distinct area of expertise. Tap any profile to learn more.</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="translators-grid" id="all-translators"></div>
+    <div style="margin-top:3rem;background:var(--accent-light);border:0.5px solid var(--faint);border-radius:16px;padding:2.25rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap">
+      <div>
+        <div style="font-family:var(--serif);font-size:1.45rem;margin-bottom:.4rem;line-height:1.2">Are you a professional translator?</div>
+        <div style="font-size:.88rem;color:var(--muted);max-width:420px;line-height:1.75">We're always open to welcoming new specialist members to our collective. Apply and tell us about your expertise.</div>
+      </div>
+      <span class="btn btn-fill" style="font-size:.9rem;padding:.8rem 1.75rem;white-space:nowrap;flex-shrink:0;border-radius:12px" onclick="showPage('contact')">Apply to Join Us →</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE -->
+<div class="page" id="page-profile">
+  <div class="breadcrumb-bar"><div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="bc-sep">›</span><a onclick="showPage('translators')">Translators</a><span class="bc-sep">›</span><span class="bc-current" id="breadcrumb-name">Profile</span></div></div>
+  <div id="profile-content"></div>
+</div>
+
+<!-- SPECIALIZATIONS -->
+<div class="page" id="page-specializations">
+  <div class="breadcrumb-bar"><div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="bc-sep">›</span><span class="bc-current">Specializations</span></div></div>
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=1400&q=75')"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-label">Expertise</div>
+      <div class="page-hero-title">Languages & specializations across our collective.</div>
+      <div class="page-hero-sub">From legal contracts to clinical trials — every field covered by a domain expert.</div>
+    </div>
+  </div>
+  <div class="section">
+    <div style="margin-bottom:2.5rem">
+      <div style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem">Languages offered</div>
+      <div style="display:flex;flex-wrap:wrap;gap:.55rem">
+        <span class="pill" style="font-size:.82rem;padding:.38rem .85rem">🇮🇹 Italian</span>
+        <span class="pill" style="font-size:.82rem;padding:.38rem .85rem">🇫🇷 French</span>
+        <span class="pill" style="font-size:.82rem;padding:.38rem .85rem">🇩🇪 German</span>
+        <span class="pill" style="font-size:.82rem;padding:.38rem .85rem">🇬🇧 English</span>
+        <span class="pill" style="font-size:.82rem;padding:.38rem .85rem">🇪🇸 Spanish</span>
+        <span class="pill" style="font-size:.82rem;padding:.38rem .85rem">🇵🇹 Portuguese</span>
+        <span class="pill" style="font-size:.82rem;padding:.38rem .85rem">🇳🇱 Dutch</span>
+        <span class="pill" style="font-size:.82rem;padding:.38rem .85rem">🇵🇱 Polish</span>
+        <span class="pill" style="font-size:.82rem;padding:.38rem .85rem">🇯🇵 Japanese</span>
+        <span class="pill" style="font-size:.82rem;padding:.38rem .85rem">🇨🇳 Chinese</span>
+      </div>
+    </div>
+    <div style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem">Subject specializations</div>
+    <div class="spec-grid" id="spec-grid"></div>
+    <div class="cta-banner">
+      <div>
+        <div class="cta-banner-title">Ready to get started?</div>
+        <div class="cta-banner-sub">Browse our translators and find the right specialist for your subject field and language pair.</div>
+      </div>
+      <span class="btn" style="background:#fff;color:var(--ink);border-color:#fff;font-size:.9rem;padding:.8rem 1.75rem;white-space:nowrap;flex-shrink:0" onclick="showPage('translators')">Connect with a Translator →</span>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="page" id="page-testimonials">
+  <div class="breadcrumb-bar"><div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="bc-sep">›</span><span class="bc-current">Testimonials</span></div></div>
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1400&q=75')"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-label">Reviews</div>
+      <div class="page-hero-title">What our clients say.</div>
+      <div class="page-hero-sub">Feedback from organisations and individuals who have worked with members of our collective.</div>
+    </div>
+  </div>
+  <div class="section">
+    <div style="margin-bottom:3rem">
+      <div class="section-label">Featured video review</div>
+      <div style="font-family:var(--serif);font-size:1.6rem;margin-bottom:.5rem;margin-top:.25rem">🎬 Video Testimonial</div>
+      <div style="background:var(--white);border:0.5px solid var(--faint);border-radius:16px;padding:1.75rem;max-width:640px">
+        <div style="position:relative;width:100%;padding-bottom:56.25%;border-radius:10px;overflow:hidden;background:#000;margin-bottom:1.25rem">
+          <iframe style="position:absolute;inset:0;width:100%;height:100%;border:none" src="resources/videotestimonial01.mp4" type="video/mp4" title="Client Video Testimonial" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem">
+          <div style="display:flex;align-items:center;gap:.65rem">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--accent-light);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:600;color:var(--ink);flex-shrink:0">SA</div>
+            <div><div style="font-size:.85rem;font-weight:500">Smith Amaka</div><div style="font-size:.72rem;color:var(--muted)">Client Review</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section-label" style="margin-bottom:.75rem">Written reviews</div>
+    <div class="tgrid" id="tgrid"></div>
+    <div class="cta-banner">
+      <div>
+        <div class="cta-banner-title">Ready to get started?</div>
+        <div class="cta-banner-sub">Browse our translators and find the right specialist for your subject field and language pair.</div>
+      </div>
+      <span class="btn" style="background:#fff;color:var(--ink);border-color:#fff;font-size:.88rem;padding:.8rem 1.75rem;white-space:nowrap;flex-shrink:0;border-radius:12px" onclick="showPage('translators')">Connect with a Translator →</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="page" id="page-contact">
+  <div class="breadcrumb-bar"><div class="breadcrumb"><a onclick="showPage('home')">Home</a><span class="bc-sep">›</span><span class="bc-current">Contact</span></div></div>
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1400&q=75')"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-label">Get in touch</div>
+      <div class="page-hero-title">Let's work together.</div>
+      <div class="page-hero-sub">Tell us about your project and we'll connect you with the right translator.</div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <h3>Tell us about your project.</h3>
+        <p>Whether you need a certified translation, localization support, or a long-term language partner — we'd love to hear from you.</p>
+        <div class="contact-item">📧 hello@elitelanguagecraft.com</div>
+        <div class="contact-item">📍 Germany & remote worldwide</div>
+        <div class="contact-item">🕒 Response within 24 hours</div>
+        <div style="margin-top:1.25rem;padding:1rem 1.1rem;background:var(--accent-light);border-radius:var(--radius)">
+          <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.35rem">Note</div>
+          <div style="font-size:.8rem;line-height:1.75;color:var(--muted)">We are a collective of independent translators, not an agency. We'll connect you directly with the most suitable member.</div>
+        </div>
+      </div>
+      <div>
+        <div class="contact-form">
+          <div class="form-row">
+            <div class="form-group"><label>First name</label><input type="text" placeholder="Jane"/></div>
+            <div class="form-group"><label>Last name</label><input type="text" placeholder="Dupont"/></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" placeholder="jane@company.com"/></div>
+          <div class="form-group"><label>Service needed</label>
+            <select><option>Document translation</option><option>Legal translation</option><option>Academic translation</option><option>Technical translation</option><option>MT post-editing</option><option>Subtitling / transcription</option><option>Certified translation</option><option>Other</option></select>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Source language</label><select><option>English</option><option>French</option><option>German</option><option>Italian</option><option>Spanish</option><option>Other</option></select></div>
+            <div class="form-group"><label>Target language</label><select><option>German</option><option>English</option><option>French</option><option>Italian</option><option>Spanish</option><option>Other</option></select></div>
+          </div>
+          <div class="form-group"><label>Message</label><textarea placeholder="Tell us about your project..."></textarea></div>
+          <button class="btn btn-fill" style="width:100%;text-align:center;padding:.8rem;font-size:.9rem" onclick="alert('Connect a backend to activate.')">Send message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo"><span class="footer-logo-elite">EL<span class="logo-i">i</span>TE</span><span class="footer-logo-sub">Language Craft</span></div>
+      <div class="footer-desc">A collective of independent professional translators. Not an agency — each member works independently under a shared standard of quality.</div>
+    </div>
+    <div class="footer-col">
+      <h5>Navigation</h5>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('translators')">Translators</a>
+      <a onclick="showPage('specializations')">Specializations</a>
+      <a onclick="showPage('testimonials')">Testimonials</a>
+      <a onclick="showPage('contact')">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h5>Languages</h5>
+      <a>Italian · French · German</a>
+      <a>English · Spanish · Portuguese</a>
+      <a>Dutch · Polish · Japanese</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2025 Elite Language Craft. All rights reserved.</div>
+</footer>
+
+<script>
+// ==================== DATA ====================
+const T=[
+  {id:0,name:'Chris Ajayi',role:'Executive Operator, Translator & Localization Specialist',location:'Germany',img:'resources/chris02.jpg',web:'#',linkedin:'#',instagram:'#',facebook:'#',proz:'#',langs:['EN','IT','FR','DE'],specs:['Legal','Academic','Technical','MTPE','Subtitling'],bio:'With over 6 years of experience, Chris specializes in legal, academic, and technical translation across Italian, French, and English. Holder of an MA in Localization Management from the University of Surrey and an RWS Post-Editing Professional Certificate (2025). Creator of Replex, a document translation and DTP reconstruction tool.',tools:['SDL Trados Studio','MemoQ','Memsource','Smartcat','MateCat'],certs:['MA Localization Management — University of Surrey','BA Linguistic Services — University of Central Lancashire','RWS Post-Editing Professional Certificate (2025)'],exp:[{org:'Freelance',role:'Translator & Localization Specialist',period:'2018–Present'},{org:'RWS Group',role:'MT Post-Editor',period:'2023–Present'}]},
+  {id:1,name:'Marie Laurent',role:'Legal & Financial Translator',location:'Paris, France',img:'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=500&q=80',web:'#',linkedin:'#',instagram:'#',facebook:'#',proz:'#',langs:['FR','EN','DE'],specs:['Legal','Financial','Contracts','EU Law'],bio:'Marie brings 8 years of experience in legal and financial translation, specializing in EU regulatory documents, commercial contracts, and financial disclosures.',tools:['SDL Trados Studio','MemoQ','Memsource'],certs:['MA Translation — Université Paris IV','Sworn Translator — French Ministry of Justice','Legal Terminology Certificate — ESIT'],exp:[{org:'Freelance',role:'Legal & Financial Translator',period:'2016–Present'},{org:'Cabinet Dupont & Associés',role:'In-house Translator',period:'2014–2016'}]},
+  {id:2,name:'Omotola O.',role:'Technical & Scientific Translator',location:'Munich, Germany',img:'resources/omotola01.png',web:'#',linkedin:'#',instagram:'#',facebook:'#',proz:'#',langs:['IT','EN','FR'],specs:['Technical','Engineering','Medical','Scientific'],bio:'Omotola has 6 years of experience translating technical manuals, engineering specifications, and medical documentation. Trained as an engineer before transitioning into translation.',tools:['SDL Trados Studio','Transit NXT','Across'],certs:['Diploma in Engineering — TU Munich','MA Technical Translation — LMU Munich','ISO 17100 Practitioner'],exp:[{org:'Freelance',role:'Technical Translator IT/EN/FR',period:'2015–Present'},{org:'Siemens AG',role:'Technical Writer & Translator',period:'2012–2015'}]},
+  {id:3,name:'Sofia Bianchi',role:'Literary & Cultural Translator',location:'Milan, Italy',img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500&q=80',web:'#',linkedin:'#',instagram:'#',facebook:'#',proz:'#',langs:['IT','EN','FR'],specs:['Literary','Cultural','Publishing','Arts'],bio:'Sofia translates literary works, cultural content, and editorial material. She has translated over 15 published novels and collaborates regularly with Italian and French publishing houses.',tools:['OmegaT','MemoQ','Sigil'],certs:['MA Literary Translation — SSLMIT Trieste','Publishing Certificate — Fondazione Mondadori'],exp:[{org:'Freelance',role:'Literary Translator',period:'2014–Present'},{org:'Mondadori',role:'Editorial Translator',period:'2011–2014'}]},
+  {id:4,name:'Amara Ndiaye',role:'Certified Document Translator',location:'Berlin, Germany',img:'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=500&q=80',web:'#',linkedin:'#',instagram:'#',facebook:'#',proz:'#',langs:['FR','EN','DE'],specs:['Certified Docs','Civil Status','Immigration','Legal'],bio:'Amara specializes in the translation and certification of official documents — birth certificates, academic transcripts, immigration papers, and civil status documents.',tools:['SDL Trados Studio','Smartcat','MateCat'],certs:['State-Certified Translator — Germany','MA Law (Administrative) — Université de Dakar','Legal Translation Diploma — BDÜ'],exp:[{org:'Freelance',role:'Certified Document Translator',period:'2017–Present'},{org:'Berliner Übersetzungsdienst',role:'Staff Translator',period:'2015–2017'}]},
+  {id:5,name:'Piotr Wiśniewski',role:'IT & Software Localization',location:'Warsaw, Poland',img:'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=500&q=80',web:'#',linkedin:'#',instagram:'#',facebook:'#',proz:'#',langs:['PL','EN','DE'],specs:['Software Localization','UI/UX','Tech Docs','Video Games'],bio:'Piotr is a localization engineer and translator with 7 years specializing in software, SaaS platforms, and video game localization.',tools:['Phrase','Lokalise','SDL Trados','Transifex','memoQ'],certs:['BSc Computer Science — Warsaw University','GALA Localization Certification','SDL Trados Certified User'],exp:[{org:'Freelance',role:'Localization Engineer & Translator',period:'2017–Present'},{org:'CD Projekt Red',role:'Junior Localization Specialist',period:'2016–2017'}]},
+  {id:6,name:'Hana Tanaka',role:'Japanese–English Translator',location:'Tokyo / Remote',img:'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&q=80',web:'#',linkedin:'#',instagram:'#',facebook:'#',proz:'#',langs:['JA','EN','ZH'],specs:['Business','Finance','Legal','Tech'],bio:'Hana specializes in Japanese–English translation for corporate communications, financial reports, legal agreements, and technology documentation.',tools:['Trados Studio','memoQ','Memsource'],certs:['BA Japanese & Economics — Keio University','MA Translation — Imperial College London','JLTAC Certification Level 1'],exp:[{org:'Freelance',role:'Japanese–English Translator',period:'2015–Present'},{org:'Mitsubishi Corp.',role:'Corporate Translator',period:'2013–2015'}]},
+  {id:7,name:'Lucía Martínez',role:'Medical & Healthcare Translator',location:'Barcelona, Spain',img:'https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=500&q=80',web:'#',linkedin:'#',instagram:'#',facebook:'#',proz:'#',langs:['ES','EN','FR','CA'],specs:['Medical','Clinical Trials','Pharma','Healthcare'],bio:'Lucía translates medical and pharmaceutical content — clinical trial protocols, patient information leaflets, and medical device documentation.',tools:['SDL Trados Studio','memoQ','TermStar'],certs:['MSc Biomedical Sciences — UAB Barcelona','MA Medical Translation — Universidad de Salamanca','EMWA Member'],exp:[{org:'Freelance',role:'Medical Translator ES/EN/FR',period:'2016–Present'},{org:'Novartis Spain',role:'Medical Affairs Translator',period:'2013–2016'}]},
+];
+const TESTIMONIALS=[
+  {quote:'Working with this collective has been exceptional. The level of specialization each translator brings is something you simply don\'t find at a general agency.',name:'Dr. Erik Hoffmann',org:'University of Freiburg',img:'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=70'},
+  {quote:'Omotola translated our entire legal compliance documentation. The accuracy and attention to register was exactly what we needed for our EU expansion.',name:'Sarah Okonkwo',org:'FinTech GmbH',img:'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&q=70'},
+  {quote:'Marie\'s translation of our shareholder agreement was flawless. She caught nuances in the original French text that our in-house team had completely missed.',name:'James Brennan',org:'Brennan & Co. Law',img:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=70'},
+  {quote:'Klaus was our first choice for our technical manuals — he understood the engineering context from day one and delivered ahead of schedule every time.',name:'Ingrid Schäfer',org:'Schäfer Industrietechnik',img:'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=70'},
+  {quote:'We\'ve been working with Lucía for over two years on our clinical documentation. She\'s indispensable to our regulatory submissions.',name:'Carla Vidal',org:'BioMed Research SL',img:'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&q=70'},
+  {quote:'Hana\'s ability to handle the cultural nuance of our Japanese correspondence has genuinely transformed our business relationships in Tokyo.',name:'Tom Whitfield',org:'Global Trade Partners',img:'https://images.unsplash.com/photo-1463453091185-61582044d556?w=100&q=70'},
+];
+const SPECS=[
+  {icon:'⚖️',name:'Legal translation',desc:'Contracts, court documents, EU law, immigration'},
+  {icon:'🔬',name:'Scientific & medical',desc:'Clinical trials, research papers, pharma'},
+  {icon:'⚙️',name:'Technical & engineering',desc:'Manuals, specifications, product docs'},
+  {icon:'📚',name:'Academic translation',desc:'Theses, journal articles, academic correspondence'},
+  {icon:'💻',name:'Software localization',desc:'UI/UX, SaaS platforms, mobile apps'},
+  {icon:'🎬',name:'Subtitling & transcription',desc:'Video, podcast, broadcast content'},
+  {icon:'📜',name:'Certified documents',desc:'Birth certificates, transcripts, civil status'},
+  {icon:'📖',name:'Literary & editorial',desc:'Books, cultural content, publishing'},
+  {icon:'💹',name:'Finance & business',desc:'Reports, filings, corporate communications'},
+  {icon:'🎮',name:'Video game localization',desc:'Game text, UI, narrative content'},
+  {icon:'🏥',name:'Healthcare communications',desc:'Patient materials, public health docs'},
+  {icon:'🤖',name:'MT post-editing',desc:'MTPE, quality review, light & full PE'},
+];
+const FIELDS=[
+  {icon:'⚖️',name:'Legal Translation',desc:'Contracts, court documents, immigration papers, EU regulatory texts.',langs:['EN','FR','DE','IT']},
+  {icon:'🔬',name:'Medical & Pharma',desc:'Clinical trials, patient information, device documentation.',langs:['EN','ES','FR','DE']},
+  {icon:'⚙️',name:'Technical & Engineering',desc:'Manuals, specifications, CAD documentation, product sheets.',langs:['DE','EN','FR']},
+  {icon:'📚',name:'Academic & Research',desc:'Theses, journal articles, conference papers.',langs:['EN','IT','FR']},
+  {icon:'💻',name:'Software Localization',desc:'UI/UX strings, SaaS, mobile apps, XML/JSON.',langs:['EN','PL','DE']},
+  {icon:'🎬',name:'Subtitling & Transcription',desc:'Video, film, podcast, and broadcast content.',langs:['EN','FR','IT']},
+  {icon:'📜',name:'Certified Documents',desc:'Birth & marriage certificates, transcripts.',langs:['FR','DE','EN']},
+  {icon:'📖',name:'Literary & Editorial',desc:'Novels, cultural content, publishing, journalism.',langs:['IT','FR','EN']},
+  {icon:'💹',name:'Finance & Business',desc:'Annual reports, filings, investor materials.',langs:['JA','EN','FR']},
+  {icon:'🏥',name:'Healthcare Comms',desc:'Patient materials, public health campaigns.',langs:['ES','EN','CA']},
+  {icon:'🎮',name:'Game Localization',desc:'Narrative content, UI text, in-game dialogue.',langs:['PL','EN','DE']},
+  {icon:'🤖',name:'MT Post-Editing',desc:'Full PE, light PE, MTPE QA across all engines.',langs:['EN','IT','FR','DE']},
+];
+const LSPS=[
+  {name:'RWS Group',type:'Global LSP',abbr:'RWS',color:'#e8f0fe',text:'#1a56db'},
+  {name:'Transperfect',type:'Global LSP',abbr:'TP',color:'#fef3c7',text:'#b45309'},
+  {name:'Lionbridge',type:'Global LSP',abbr:'LB',color:'#fce7f3',text:'#9d174d'},
+  {name:'Welocalize',type:'Localization',abbr:'WL',color:'#d1fae5',text:'#065f46'},
+  {name:'Acolad',type:'European LSP',abbr:'AC',color:'#ede9fe',text:'#5b21b6'},
+  {name:'Thebigword',type:'Language Services',abbr:'TBW',color:'#fee2e2',text:'#991b1b'},
+  {name:'Semantix',type:'Nordic LSP',abbr:'SX',color:'#e0f2fe',text:'#0369a1'},
+  {name:'Translated',type:'AI + Human LSP',abbr:'TR',color:'#f0fdf4',text:'#166534'},
+  {name:'Argo Translation',type:'Specialized LSP',abbr:'AT',color:'#fff7ed',text:'#92400e'},
+  {name:'Smartling',type:'Translation Tech',abbr:'SL',color:'#f0f9ff',text:'#0c4a6e'},
+];
+
+// ==================== RENDER ====================
+function card(t){
+  return `<div class="translator-card" onclick="showProfile(${t.id})">
+    <img class="tc-img" src="${t.img}" alt="${t.name}" loading="lazy"/>
+    <div class="tc-body">
+      <div class="tc-name">${t.name}</div>
+      <div class="tc-role">${t.role}</div>
+      <div class="tc-langs">${t.langs.map(l=>`<span class="pill">${l}</span>`).join('')}</div>
+      <div class="tc-spec">${t.specs.slice(0,3).join(' · ')}</div>
+      <div class="view-link">View profile →</div>
+    </div>
+  </div>`;
+}
+function profile(t){
+  const fn=t.name.split(' ')[0];
+  const sozBtn=(k,path)=>`<a href="${t[k]||'#'}" target="_blank" style="width:38px;height:38px;border-radius:50%;border:0.5px solid var(--faint);background:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${path}</svg></a>`;
+  return `
+  <div class="profile-hero">
+    <div class="profile-photo"><img src="${t.img}" alt="${t.name}"/></div>
+    <div>
+      <div class="profile-name">${t.name}</div>
+      <div class="profile-role">${t.role} · <span style="color:var(--muted)">${t.location}</span></div>
+      <div class="profile-langs">${t.langs.map(l=>`<span class="pill">${l}</span>`).join('')}${t.specs.map(s=>`<span class="pill">${s}</span>`).join('')}</div>
+      <div class="profile-bio">${t.bio}</div>
+      <div style="display:flex;align-items:center;gap:.55rem;margin-top:1.1rem;flex-wrap:wrap">
+        <span class="btn btn-fill" onclick="showPage('contact')" style="padding:.6rem 1.25rem;font-size:.85rem">Work with ${fn}</span>
+        ${sozBtn('web','<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>')}
+        ${sozBtn('linkedin','<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>')}
+        <a href="${t.proz||'#'}" target="_blank" title="ProZ.com profile" style="width:38px;height:38px;border-radius:50%;border:0.5px solid var(--faint);background:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;text-decoration:none"><svg width="18" height="18" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><text x="3" y="24" font-family="'Montserrat','DM Sans',sans-serif" font-weight="800" font-size="22" fill="var(--muted)" letter-spacing="-1">Pz</text></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="profile-body">
+    <div class="profile-section">
+      <h3>Experience</h3>
+      ${t.exp.map(e=>`<div class="pei"><div class="pei-top"><div class="pei-org">${e.org}</div><div class="pei-period">${e.period}</div></div><div class="pei-role">${e.role}</div></div>`).join('')}
+    </div>
+    <div>
+      <div class="sidebar-card"><h4>Qualifications</h4>${t.certs.map(c=>`<div class="cert-item"><div class="cert-dot"></div><div>${c}</div></div>`).join('')}</div>
+      <div class="sidebar-card"><h4>CAT Tools</h4><div class="tools-list">${t.tools.map(x=>`<span class="pill">${x}</span>`).join('')}</div></div>
+    </div>
+  </div>`;
+}
+
+document.getElementById('photo-row').innerHTML=T.map(t=>`<div class="photo-thumb" onclick="showProfile(${t.id})"><img src="${t.img}" alt="${t.name}" loading="lazy"/><div class="pt-name">${t.name}</div></div>`).join('');
+document.getElementById('home-translators').innerHTML=T.slice(0,4).map(card).join('');
+document.getElementById('all-translators').innerHTML=T.map(card).join('');
+document.getElementById('spec-grid').innerHTML=SPECS.map(s=>`<div class="spec-card"><div class="spec-icon">${s.icon}</div><div class="spec-name">${s.name}</div><div class="spec-desc">${s.desc}</div></div>`).join('');
+document.getElementById('tgrid').innerHTML=TESTIMONIALS.map(t=>`<div class="tcard"><div class="tcard-quote">"${t.quote}"</div><div class="tcard-author"><img class="tcard-img" src="${t.img}" alt="${t.name}" loading="lazy"/><div><div class="tcard-name">${t.name}</div><div class="tcard-org">${t.org}</div></div></div></div>`).join('');
+document.getElementById('fields-grid').innerHTML=FIELDS.map(f=>`<div class="field-card"><div class="field-icon">${f.icon}</div><div class="field-name">${f.name}</div><div class="field-desc">${f.desc}</div><div class="field-langs">${f.langs.map(l=>`<span class="field-pill">${l}</span>`).join('')}</div></div>`).join('');
+document.getElementById('marquee-track').innerHTML=[...LSPS,...LSPS].map(l=>`<div class="lsp-card"><div style="width:44px;height:44px;border-radius:9px;background:${l.color};display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:600;color:${l.text};border:0.5px solid rgba(0,0,0,.06)">${l.abbr}</div><div class="lsp-name">${l.name}</div><div class="lsp-type">${l.type}</div></div>`).join('');
+
+// ==================== NAVIGATION ====================
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  const pm={home:'page-home',translators:'page-translators',profile:'page-profile',specializations:'page-specializations',testimonials:'page-testimonials',contact:'page-contact'};
+  const nm={home:'nav-home',translators:'nav-translators',specializations:'nav-spec',testimonials:'nav-testimonials',contact:'nav-contact'};
+  document.getElementById(pm[id]).classList.add('active');
+  if(nm[id]) document.getElementById(nm[id]).classList.add('active');
+  window.scrollTo(0,0);
+  closeMenu();
+}
+function showProfile(id){
+  const t=T[id];
+  document.getElementById('profile-content').innerHTML=profile(t);
+  document.getElementById('breadcrumb-name').textContent=t.name;
+  showPage('profile');
+}
+function toggleMenu(){
+  document.getElementById('ham').classList.toggle('open');
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('ham').classList.remove('open');
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+function navTo(id){showPage(id)}
+
+// ==================== CAROUSEL ====================
+const CT=TESTIMONIALS.map((t,i)=>({...t,tImg:T[i%T.length].img}));
+let cIdx=0;
+const cTrack=document.getElementById('carousel-track');
+const cDots=document.getElementById('c-dots');
+cTrack.innerHTML=CT.map(t=>`<div class="carousel-slide"><div class="cslide-inner"><div><div class="cslide-qmark">"</div><div class="cslide-quote">${t.quote}</div><div class="cslide-author"><img class="cslide-img" src="${t.img}" alt="${t.name}" loading="lazy"/><div><div class="cslide-name">${t.name}</div><div class="cslide-org">${t.org}</div></div></div></div><div class="cslide-side"><img class="cslide-side-img" src="${t.tImg}" alt="" loading="lazy"/><div class="cslide-side-label">Verified client review</div></div></div></div>`).join('');
+cDots.innerHTML=CT.map((_,i)=>`<div class="carousel-dot${i===0?' active':''}" onclick="goSlide(${i})"></div>`).join('');
+function goSlide(n){cIdx=(n+CT.length)%CT.length;cTrack.style.transform=`translateX(-${cIdx*100}%)`;document.querySelectorAll('.carousel-dot').forEach((d,i)=>d.classList.toggle('active',i===cIdx))}
+document.getElementById('c-prev').onclick=()=>goSlide(cIdx-1);
+document.getElementById('c-next').onclick=()=>goSlide(cIdx+1);
+setInterval(()=>goSlide(cIdx+1),5000);
+let tx=0;
+cTrack.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+cTrack.addEventListener('touchend',e=>{const dx=tx-e.changedTouches[0].clientX;if(Math.abs(dx)>40)goSlide(dx>0?cIdx+1:cIdx-1)},{passive:true});
+
+// ==================== COUNTER ANIMATION ====================
+(function(){
+  const els = document.querySelectorAll('.counter');
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting || entry.target._done) return;
+      entry.target._done = true;
+      const target = +entry.target.dataset.target;
+      const suffix = entry.target.dataset.suffix || '';
+      const dur = 2000, t0 = performance.now();
+      function tick(now){
+        const p = Math.min((now - t0) / dur, 1);
+        // Ease out cubic
+        const ease = 1 - Math.pow(1 - p, 3);
+        entry.target.textContent = Math.round(ease * target) + suffix;
+        if(p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  }, {threshold: 0.6});
+  els.forEach(el => io.observe(el));
+})();
+
+// ==================== LANGUAGE MAP ====================
+(function(){
+  const canvas = document.getElementById('homeMapCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const tip = document.getElementById('homeMapTip');
+  const detailEl = document.getElementById('homeMapDetail');
+
+  const NODES = [
+    {code:'EN', name:'English',    cx:.48, cy:.47, r:30, col:'#f0ede3', trans:7, countries:'United Kingdom · USA · Australia · Canada · New Zealand'},
+    {code:'FR', name:'French',     cx:.20, cy:.35, r:24, col:'#f59e0b', trans:5, countries:'France · Belgium · Switzerland · Canada (Quebec)'},
+    {code:'DE', name:'German',     cx:.63, cy:.27, r:22, col:'#34d399', trans:4, countries:'Germany · Austria · Switzerland · Liechtenstein'},
+    {code:'IT', name:'Italian',    cx:.73, cy:.58, r:19, col:'#60a5fa', trans:2, countries:'Italy · Switzerland (Ticino) · San Marino'},
+    {code:'ES', name:'Spanish',    cx:.14, cy:.64, r:19, col:'#f87171', trans:1, countries:'Spain + 20 Latin American countries'},
+    {code:'PL', name:'Polish',     cx:.77, cy:.17, r:17, col:'#a78bfa', trans:1, countries:'Poland'},
+    {code:'JA', name:'Japanese',   cx:.9,  cy:.42, r:19, col:'#fb923c', trans:1, countries:'Japan'},
+    {code:'ZH', name:'Chinese',    cx:.84, cy:.72, r:17, col:'#e879f9', trans:1, countries:'China · Taiwan · Singapore · Hong Kong'},
+    {code:'PT', name:'Portuguese', cx:.06, cy:.52, r:15, col:'#2dd4bf', trans:0, countries:'Portugal · Brazil · Mozambique · Angola'},
+    {code:'NL', name:'Dutch',      cx:.37, cy:.14, r:15, col:'#facc15', trans:0, countries:'Netherlands · Belgium (Flanders)'},
+  ];
+
+  const EDGES = 'EN-DE,EN-FR,EN-IT,EN-ES,EN-PL,EN-JA,EN-ZH,EN-PT,EN-NL,FR-DE,FR-IT,FR-ES,DE-PL,DE-NL,JA-ZH'
+    .split(',').map(e=>{
+      const [a,b]=e.split('-');
+      return{a,b,na:NODES.find(n=>n.code===a),nb:NODES.find(n=>n.code===b)};
+    });
+
+  let W, H, pulses=[], hovered=null, pinned=null, lastPulse=0, scale=1;
+
+  function resize(){
+    const wrap = canvas.parentElement;
+    W = canvas.width = wrap.clientWidth;
+    H = canvas.height = Math.min(W * 0.5, 420);
+    canvas.style.height = H + 'px';
+    scale = W / 900;
+  }
+
+  function px(n){ return {x: n.cx * W, y: n.cy * H} }
+
+  function drawEdges(){
+    EDGES.forEach(({na,nb})=>{
+      const pa=px(na), pb=px(nb);
+      const hiA = na===hovered||nb===hovered||na===pinned||nb===pinned;
+      const g = ctx.createLinearGradient(pa.x,pa.y,pb.x,pb.y);
+      g.addColorStop(0, na.col + (hiA?'60':'22'));
+      g.addColorStop(0.5, na.col + (hiA?'88':'38'));
+      g.addColorStop(1, nb.col + (hiA?'60':'22'));
+      ctx.beginPath();
+      ctx.moveTo(pa.x,pa.y); ctx.lineTo(pb.x,pb.y);
+      ctx.strokeStyle=g;
+      ctx.lineWidth = hiA ? 1.8 : 1;
+      ctx.setLineDash([3,7]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    });
+  }
+
+  function drawNode(n){
+    const {x,y}=px(n);
+    const r = n.r * Math.max(scale, 0.55);
+    const hi = n===hovered||n===pinned;
+    // Glow
+    const glow=ctx.createRadialGradient(x,y,0,x,y,r*3.2);
+    glow.addColorStop(0, n.col+(hi?'35':'18'));
+    glow.addColorStop(1,'transparent');
+    ctx.beginPath(); ctx.arc(x,y,r*3.2,0,Math.PI*2);
+    ctx.fillStyle=glow; ctx.fill();
+    // Pulse ring when highlighted
+    if(hi){
+      ctx.beginPath(); ctx.arc(x,y,r+6*scale,0,Math.PI*2);
+      ctx.strokeStyle=n.col+'70'; ctx.lineWidth=1.5; ctx.stroke();
+    }
+    // Fill
+    const fill=ctx.createRadialGradient(x-r*.25,y-r*.25,0,x,y,r);
+    fill.addColorStop(0,n.col);
+    fill.addColorStop(1,n.col+'bb');
+    ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2);
+    ctx.fillStyle = hi ? fill : n.col+'cc';
+    ctx.fill();
+    ctx.strokeStyle=n.col+(hi?'':' '); ctx.lineWidth=hi?1.8:.9; ctx.stroke();
+    // Code label
+    const fs=Math.max(8.5, r*.64);
+    ctx.fillStyle='rgba(15,15,13,.85)';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.font=`700 ${fs}px "Montserrat",sans-serif`;
+    ctx.fillText(n.code,x,y);
+    // Name below
+    ctx.fillStyle='rgba(255,255,255,.4)';
+    ctx.font=`${Math.max(7,r*.36)}px "DM Sans",sans-serif`;
+    ctx.fillText(n.name,x,y+r+9*scale);
+  }
+
+  function drawPulses(ts){
+    if(ts-lastPulse>650){ spawnPulse(); lastPulse=ts; }
+    pulses=pulses.filter(p=>p.t<1);
+    pulses.forEach(p=>{
+      p.t+=p.spd;
+      const pa=px(p.na),pb=px(p.nb);
+      const x=pa.x+(pb.x-pa.x)*p.t, y=pa.y+(pb.y-pa.y)*p.t;
+      const g=ctx.createRadialGradient(x,y,0,x,y,7);
+      g.addColorStop(0,p.na.col+'ff'); g.addColorStop(1,'transparent');
+      ctx.beginPath(); ctx.arc(x,y,7,0,Math.PI*2);
+      ctx.fillStyle=g; ctx.fill();
+    });
+  }
+
+  function spawnPulse(){
+    const e=EDGES[Math.floor(Math.random()*EDGES.length)];
+    const fwd=Math.random()>.5;
+    pulses.push({na:fwd?e.na:e.nb, nb:fwd?e.nb:e.na, t:0, spd:.003+Math.random()*.004});
+  }
+
+  function draw(ts){
+    ctx.clearRect(0,0,W,H);
+    drawEdges();
+    drawPulses(ts);
+    NODES.forEach(n=>drawNode(n));
+    requestAnimationFrame(draw);
+  }
+
+  function nodeAt(mx,my){
+    return NODES.find(n=>{
+      const {x,y}=px(n);
+      return Math.hypot(mx-x,my-y) < n.r*Math.max(scale,.55)+10;
+    })||null;
+  }
+
+  function showDetail(n){
+    pinned=n;
+    detailEl.style.display='block';
+    detailEl.innerHTML=`
+      <div class="lms-detail-head">
+        <span style="width:11px;height:11px;border-radius:50%;background:${n.col};flex-shrink:0;display:inline-block"></span>
+        <span class="lms-detail-name">${n.name} (${n.code})</span>
+        <span class="lms-detail-count">${n.trans} translator${n.trans!==1?'s':''} available</span>
+      </div>
+      <div class="lms-detail-countries">${n.countries}</div>
+      <div style="display:flex;gap:.65rem;flex-wrap:wrap">
+        ${n.trans>0?`<button onclick="showPage('translators')" style="background:rgba(255,255,255,.1);border:0.5px solid rgba(255,255,255,.2);color:#fff;padding:.45rem 1.1rem;border-radius:8px;font-size:.78rem;cursor:pointer;font-family:var(--sans)">View ${n.name} translators →</button>`:''}
+        <button onclick="document.getElementById('homeMapDetail').style.display='none';pinned=null" style="background:transparent;border:0.5px solid rgba(255,255,255,.15);color:rgba(255,255,255,.4);padding:.45rem 1.1rem;border-radius:8px;font-size:.78rem;cursor:pointer;font-family:var(--sans)">Dismiss</button>
+      </div>`;
+  }
+
+  canvas.addEventListener('mousemove',e=>{
+    const r=canvas.getBoundingClientRect();
+    const mx=(e.clientX-r.left)*(W/r.width), my=(e.clientY-r.top)*(H/r.height);
+    hovered=nodeAt(mx,my);
+    if(hovered){
+      tip.style.cssText=`opacity:1;left:${e.clientX-r.left+14}px;top:${e.clientY-r.top-10}px`;
+      tip.innerHTML=`<strong>${hovered.name}</strong><span>${hovered.countries}</span><em>🟢 ${hovered.trans} translator${hovered.trans!==1?'s':''} available</em>`;
+      canvas.style.cursor='pointer';
+    } else {
+      tip.style.opacity='0';
+      canvas.style.cursor='default';
+    }
+  });
+  canvas.addEventListener('mouseleave',()=>{ hovered=null; tip.style.opacity='0'; });
+  canvas.addEventListener('click',e=>{
+    const r=canvas.getBoundingClientRect();
+    const n=nodeAt((e.clientX-r.left)*(W/r.width),(e.clientY-r.top)*(H/r.height));
+    if(n) showDetail(n);
+  });
+  canvas.addEventListener('touchstart',e=>{
+    e.preventDefault();
+    const r=canvas.getBoundingClientRect(), t=e.touches[0];
+    const n=nodeAt((t.clientX-r.left)*(W/r.width),(t.clientY-r.top)*(H/r.height));
+    if(n) showDetail(n);
+  },{passive:false});
+
+  window.NODES_REF = Object.fromEntries(NODES.map(n=>[n.code,n]));
+
+  window.addEventListener('resize',resize);
+  resize();
+  for(let i=0;i<4;i++) setTimeout(spawnPulse, i*250);
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
