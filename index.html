@@ -881,7 +881,7 @@ function profile(t){
   /* 4. Rates sidebar card */
   const ratesHTML = t.rates ? `
     <div class="rates-card">
-      <h4>Rates &amp; turnaround</h4>
+      <h4>Rates($) &amp; turnaround</h4>
       ${t.rates.map(r=>`<div class="rates-row"><span class="rates-label">${r.label}</span><span class="rates-val">${r.val}</span></div>`).join('')}
     </div>` : '';
 
