@@ -412,6 +412,18 @@ footer{background:var(--ink);color:rgba(255,255,255,.4);font-size:.8rem;padding:
   .pstat-num{font-size:1.1rem}
   .rates-row{gap:.1rem}
 }
+
+/* ===== SHARE PROFILE BUTTON ===== */
+.share-btn-wrap{position:relative;margin-top:.75rem}
+.share-btn{display:flex;align-items:center;justify-content:center;gap:.45rem;width:100%;padding:.52rem .9rem;border:0.5px solid var(--faint);border-radius:var(--radius);background:var(--white);font-family:var(--sans);font-size:.78rem;font-weight:500;color:var(--muted);cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+.share-btn:hover{border-color:#bbb;color:var(--ink);background:var(--bg)}
+.share-dropdown{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--white);border:0.5px solid var(--faint);border-radius:var(--radius);box-shadow:0 8px 24px rgba(0,0,0,.09);z-index:50;overflow:hidden;display:none}
+.share-dropdown.open{display:block}
+.share-option{display:flex;align-items:center;gap:.65rem;padding:.62rem .9rem;font-size:.8rem;color:var(--ink);cursor:pointer;transition:background .15s;border-bottom:0.5px solid var(--faint);white-space:nowrap}
+.share-option:last-child{border-bottom:none}
+.share-option:hover{background:var(--accent-light)}
+.share-option svg{flex-shrink:0}
+.share-option.copied{color:#10b981}
 </style>
 </head>
 <body>
@@ -883,9 +895,40 @@ function profile(t){
       ${t.rates.map(r=>`<div class="rates-row"><span class="rates-label">${r.label}</span><span class="rates-val">${r.val}</span></div>`).join('')}
     </div>` : '';
 
+  /* 5. Share button */
+  const shareId = 'share-'+t.id;
+  const shareHTML = `
+    <div class="share-btn-wrap" id="${shareId}-wrap">
+      <button class="share-btn" onclick="toggleShare('${shareId}')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share profile
+      </button>
+      <div class="share-dropdown" id="${shareId}-dd">
+        <div class="share-option" onclick="shareOn('linkedin','${encodeURIComponent(t.name)}','${t.id}')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          Share on LinkedIn
+        </div>
+        <div class="share-option" onclick="shareOn('twitter','${encodeURIComponent(t.name)}','${t.id}')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.261 5.632 5.903-5.632Zm-1.161 17.52h1.833L7.084 4.126H5.117Z"/></svg>
+          Share on X (Twitter)
+        </div>
+        <div class="share-option" onclick="shareOn('whatsapp','${encodeURIComponent(t.name)}','${t.id}')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Share on WhatsApp
+        </div>
+        <div class="share-option" onclick="copyProfileLink('${shareId}','${t.id}')" id="${shareId}-copy">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy profile link
+        </div>
+      </div>
+    </div>`;
+
   return `
   <div class="profile-hero">
-    <div class="profile-photo"><img src="${t.img}" alt="${t.name}"/></div>
+    <div>
+      <div class="profile-photo"><img src="${t.img}" alt="${t.name}"/></div>
+      ${shareHTML}
+    </div>
     <div style="min-width:0;overflow:hidden">
       ${availHTML}
       <div class="profile-name">${t.name}</div>
@@ -952,6 +995,64 @@ document.addEventListener('click',e=>{
   const next=e.target.closest('[id$="-next"]');
   if(prev){const pid=prev.id.replace('-prev','');const total=document.querySelectorAll(`#${pid}-dots .mini-dot`).length;miniGo(pid,(_miniIdx[pid]||0)-1,total);}
   if(next){const pid=next.id.replace('-next','');const total=document.querySelectorAll(`#${pid}-dots .mini-dot`).length;miniGo(pid,(_miniIdx[pid]||0)+1,total);}
+});
+
+/* ===== SHARE PROFILE FUNCTIONS ===== */
+function toggleShare(shareId){
+  const dd=document.getElementById(shareId+'-dd');
+  if(!dd) return;
+  const isOpen=dd.classList.contains('open');
+  // Close all open dropdowns first
+  document.querySelectorAll('.share-dropdown.open').forEach(el=>el.classList.remove('open'));
+  if(!isOpen) dd.classList.add('open');
+}
+
+function _profileUrl(id){
+  // Build a shareable URL; uses current page URL as base + hash
+  return window.location.href.split('#')[0]+'#translator-'+id;
+}
+
+function shareOn(platform,name,id){
+  const url=encodeURIComponent(_profileUrl(id));
+  const text=encodeURIComponent('Check out '+decodeURIComponent(name)+'\'s translator profile on Elite Language Craft');
+  let link='';
+  if(platform==='linkedin') link=`https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+  if(platform==='twitter') link=`https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+  if(platform==='whatsapp') link=`https://wa.me/?text=${text}%20${url}`;
+  if(link) window.open(link,'_blank','noopener,noreferrer,width=600,height=520');
+  // Close dropdown
+  document.querySelectorAll('.share-dropdown.open').forEach(el=>el.classList.remove('open'));
+}
+
+function copyProfileLink(shareId,id){
+  const url=_profileUrl(id);
+  const el=document.getElementById(shareId+'-copy');
+  navigator.clipboard.writeText(url).then(()=>{
+    if(el){
+      const orig=el.innerHTML;
+      el.classList.add('copied');
+      el.innerHTML=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Link copied!`;
+      setTimeout(()=>{el.innerHTML=orig;el.classList.remove('copied');},2000);
+    }
+  }).catch(()=>{
+    // Fallback for non-https
+    const ta=document.createElement('textarea');
+    ta.value=url; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    if(el){
+      const orig=el.innerHTML;
+      el.classList.add('copied');
+      el.innerHTML=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Link copied!`;
+      setTimeout(()=>{el.innerHTML=orig;el.classList.remove('copied');},2000);
+    }
+  });
+  setTimeout(()=>document.querySelectorAll('.share-dropdown.open').forEach(el=>el.classList.remove('open')),300);
+}
+
+// Close share dropdown when clicking outside
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.share-btn-wrap')) document.querySelectorAll('.share-dropdown.open').forEach(el=>el.classList.remove('open'));
 });
 
 /* Touch swipe for mini carousels */
