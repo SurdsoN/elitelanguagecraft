@@ -1008,8 +1008,7 @@ function toggleShare(shareId){
 }
 
 function _profileUrl(id){
-  // Build a shareable URL; uses current page URL as base + hash
-  return window.location.href.split('#')[0]+'#translator-'+id;
+  return window.location.origin + window.location.pathname + '#translator-' + id;
 }
 
 function shareOn(platform,name,id){
@@ -1086,7 +1085,7 @@ document.getElementById('fields-grid').innerHTML=FIELDS.map(f=>`<div class="fiel
 document.getElementById('marquee-track').innerHTML=[...LSPS,...LSPS].map(l=>`<div class="lsp-card"><div style="width:44px;height:44px;border-radius:9px;background:${l.color};display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:600;color:${l.text};border:0.5px solid rgba(0,0,0,.06)">${l.abbr}</div><div class="lsp-name">${l.name}</div><div class="lsp-type">${l.type}</div></div>`).join('');
 
 // ==================== NAVIGATION ====================
-function showPage(id){
+function showPage(id, pushHash=true){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
   const pm={home:'page-home',translators:'page-translators',profile:'page-profile',specializations:'page-specializations',testimonials:'page-testimonials',contact:'page-contact'};
@@ -1095,15 +1094,36 @@ function showPage(id){
   if(nm[id]) document.getElementById(nm[id]).classList.add('active');
   window.scrollTo(0,0);
   closeMenu();
+  if(pushHash){
+    const hashMap={home:'',translators:'translators',specializations:'specializations',testimonials:'testimonials',contact:'contact'};
+    if(id in hashMap) history.pushState(null,'', hashMap[id] ? '#'+hashMap[id] : window.location.pathname);
+  }
 }
-function showProfile(id){
+function showProfile(id, pushHash=true){
   const t=T[id];
   document.getElementById('profile-content').innerHTML=profile(t);
   document.getElementById('breadcrumb-name').textContent=t.name;
-  showPage('profile');
+  showPage('profile', false);
+  if(pushHash) history.pushState(null,'','#translator-'+id);
   const pid='mc-'+id;
   if(document.getElementById(pid+'-bar')) miniStart(pid);
 }
+
+// ==================== HASH ROUTER ====================
+function routeFromHash(){
+  const hash = window.location.hash;
+  if(!hash || hash==='#'){showPage('home',false);return;}
+  const trMatch = hash.match(/^#translator-(\d+)$/);
+  if(trMatch){
+    const id=parseInt(trMatch[1],10);
+    if(T[id]){showProfile(id,false);return;}
+  }
+  const pageMap={'#translators':'translators','#specializations':'specializations','#testimonials':'testimonials','#contact':'contact'};
+  if(pageMap[hash]){showPage(pageMap[hash],false);return;}
+  showPage('home',false);
+}
+window.addEventListener('popstate', routeFromHash);
+routeFromHash();
 function toggleMenu(){
   document.getElementById('ham').classList.toggle('open');
   document.getElementById('mobile-menu').classList.toggle('open');
