@@ -146,6 +146,42 @@ nav{position:sticky;top:0;z-index:100;background:rgba(249,248,244,0.95);backdrop
 .cert-dot{width:5px;height:5px;border-radius:50%;background:var(--ink);margin-top:.5rem;flex-shrink:0}
 .tools-list{display:flex;flex-wrap:wrap;gap:.4rem}
 
+/* ===== PROFILE ENHANCEMENTS ===== */
+.avail-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.38rem .9rem;border-radius:20px;font-size:.78rem;font-weight:500;margin-bottom:1rem}
+.avail-badge.open{background:#d1fae5;color:#065f46;border:0.5px solid #6ee7b7}
+.avail-badge.busy{background:#fee2e2;color:#991b1b;border:0.5px solid #fca5a5}
+.avail-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.avail-badge.open .avail-dot{background:#10b981}
+.avail-badge.busy .avail-dot{background:#ef4444}
+
+.profile-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.65rem;margin-bottom:1.5rem}
+.pstat{background:var(--accent-light);border-radius:var(--radius);padding:.75rem .85rem;text-align:center}
+.pstat-num{font-family:var(--serif);font-size:1.55rem;color:var(--ink);line-height:1}
+.pstat-lbl{font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+
+.rates-card{background:var(--white);border:0.5px solid var(--faint);border-radius:var(--radius);padding:1.1rem;margin-bottom:.9rem}
+.rates-card h4{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem}
+.rates-row{display:flex;justify-content:space-between;align-items:center;padding:.35rem 0;border-bottom:0.5px solid var(--faint);font-size:.82rem}
+.rates-row:last-child{border-bottom:none}
+.rates-label{color:var(--muted)}
+.rates-val{font-weight:500;color:var(--ink)}
+
+.mini-carousel{position:relative;overflow:hidden;border-radius:12px;margin-bottom:1.5rem}
+.mini-track{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.mini-slide{flex:0 0 100%;background:var(--white);border:0.5px solid var(--faint);border-radius:12px;padding:1.25rem}
+.mini-quote{font-family:var(--serif);font-size:.95rem;line-height:1.65;font-style:italic;color:var(--ink);margin-bottom:.9rem}
+.mini-author{font-size:.75rem;font-weight:500;color:var(--muted)}
+.mini-org{font-size:.7rem;color:var(--muted);opacity:.7}
+.mini-controls{display:flex;align-items:center;gap:.6rem;margin-top:.65rem}
+.mini-btn{width:28px;height:28px;border-radius:50%;border:0.5px solid var(--faint);background:var(--white);cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.mini-btn:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.mini-dots{display:flex;gap:.35rem;align-items:center}
+.mini-dot{width:5px;height:5px;border-radius:50%;background:var(--faint);cursor:pointer;transition:background .2s,transform .2s}
+.mini-dot.active{background:var(--ink);transform:scale(1.3)}
+.mini-timer{height:2px;background:var(--faint);border-radius:2px;margin-top:.55rem;overflow:hidden}
+.mini-timer-bar{height:100%;background:var(--ink);border-radius:2px;width:0%;transition:width linear}
+@media(max-width:600px){.profile-stats-row{grid-template-columns:repeat(2,1fr)}}
+
 .trusted-section{background:var(--white);border-top:0.5px solid var(--faint);border-bottom:0.5px solid var(--faint);padding:3.5rem 0}
 .trusted-inner{max-width:var(--max);margin:0 auto;padding:0 1.5rem}
 .trusted-header{text-align:center;margin-bottom:2.25rem}
@@ -684,7 +720,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.4);font-size:.8rem;padding:
 const T=[
   {id:0,name:'Chris Ajayi',role:'Executive Operator, Translator & Localization Specialist',location:'Germany',img:'resources/chris02.jpg',web:'#',linkedin:'#',instagram:'#',facebook:'#',proz:'#',langs:['EN','IT','FR','DE'],specs:['Legal','Academic','Technical','MTPE','Subtitling'],bio:'With over 6 years of experience, Chris specializes in legal, academic, and technical translation across Italian, French, and English. Holder of an MA in Localization Management from the University of Surrey and an RWS Post-Editing Professional Certificate (2025). Creator of Replex, a document translation and DTP reconstruction tool.',tools:['SDL Trados Studio','MemoQ','Memsource','Smartcat','MateCat'],certs:['MA Localization Management — University of Surrey','BA Linguistic Services — University of Central Lancashire','RWS Post-Editing Professional Certificate (2025)'],exp:[{org:'Freelance',role:'Translator & Localization Specialist',period:'2018–Present'},{org:'RWS Group',role:'MT Post-Editor',period:'2023–Present'}]},
   {id:1,name:'Marie Laurent',role:'Legal & Financial Translator',location:'Paris, France',img:'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=500&q=80',web:'#',linkedin:'#',instagram:'#',facebook:'#',proz:'#',langs:['FR','EN','DE'],specs:['Legal','Financial','Contracts','EU Law'],bio:'Marie brings 8 years of experience in legal and financial translation, specializing in EU regulatory documents, commercial contracts, and financial disclosures.',tools:['SDL Trados Studio','MemoQ','Memsource'],certs:['MA Translation — Université Paris IV','Sworn Translator — French Ministry of Justice','Legal Terminology Certificate — ESIT'],exp:[{org:'Freelance',role:'Legal & Financial Translator',period:'2016–Present'},{org:'Cabinet Dupont & Associés',role:'In-house Translator',period:'2014–2016'}]},
-  {id:2,name:'Omotola O.',role:'Technical & Scientific Translator',location:'Munich, Germany',img:'resources/omotola01.png',web:'#',linkedin:'https://www.linkedin.com/in/omotoler-onabanjo',instagram:'#',facebook:'#',proz:'#',langs:['IT','EN','FR'],specs:['Technical','Legal','Academic','Technical', 'Certified/Immigration', 'MTPE','Localization'],bio:'With over 6 years of experience, Omotola specializes in legal, academic, and technical translation between Italian and French, with advanced English proficiency. He has successfully completed 1,200+ documents with a 98% client satisfaction rate. Omotola is certified in RWS Post-Editing (2025) and holds an MA in Localization Management from the University of Surrey. Skilled in CAT tools and quality assurance protocols, he optimizes turnaround times while ensuring linguistic precision and regulatory compliance.',tools:['SDL Trados Studio','MemoQ','Across', 'Wordfast', 'OmegaT'],certs:['MA in Localization Management — University of Surrey','BA in Linguistic Services — University of Central Lancashire','RWS Post-Editing Professional Certificate (2025)','ISO 17100 Practitioner'],exp:[{org:'Freelance',role:'Technical Translator IT/EN/FR',period:'2019–Present'},{org:'Lexis Translations',role:'Multilingual Translator',period:'2022–2024'}, {org:'LinguaNet Translations',role:'Senior Multilingual Translator',period:'2024–2025'},{org:'Mantas Translations',role:'Italian–French Localization Specialist',period:'2020–2021'}]},
+  {id:2,name:'Omotola O.',role:'Technical & Scientific Translator',location:'Munich, Germany',img:'resources/omotola01.png',web:'#',linkedin:'https://www.linkedin.com/in/omotoler-onabanjo',instagram:'#',facebook:'#',proz:'#',langs:['IT','EN','FR'],specs:['Technical','Legal','Academic','Certified/Immigration','MTPE','Localization'],bio:'With over 6 years of experience, Omotola specializes in legal, academic, and technical translation between Italian and French, with advanced English proficiency. Skilled in CAT tools and quality assurance protocols, he optimizes turnaround times while ensuring linguistic precision and regulatory compliance.',tools:['SDL Trados Studio','MemoQ','Smartcat','MateCat','Memsource'],certs:['MA in Localization Management — University of Surrey','BA in Linguistic Services — University of Central Lancashire','RWS Post-Editing Professional Certificate (2025)','ISO 17100 Practitioner'],exp:[{org:'Freelance',role:'Technical Translator IT/EN/FR',period:'2019–Present'},{org:'Lexis Translations',role:'Multilingual Translator',period:'2022–2024'},{org:'LinguaNet Translations',role:'Senior Multilingual Translator',period:'2024–2025'},{org:'Mantas Translations',role:'Italian–French Localization Specialist',period:'2020–2021'}],availability:{status:'open',label:'Available from 16 June 2026',capacity:'Up to 3,000 words/day'},stats:[{num:'1,200+',lbl:'Documents'},{num:'98%',lbl:'Satisfaction'},{num:'6+',lbl:'Yrs experience'},{num:'3',lbl:'Language pairs'}],rates:[{label:'Standard translation',val:'€0.10 – €0.14 / word'},{label:'Legal / certified',val:'€0.14 – 0.18 / word'},{label:'MT post-editing',val:'€0.05 – €0.08 / word'},{label:'Min. turnaround',val:'24 hrs (up to 1,500 w)'},{label:'Rush surcharge',val:'+25% under 12 hrs'}],profileTestimonials:[{quote:'Omotola consistently delivers on time and flags issues before they become problems. Our go-to for Italian legal contracts.',author:'Project Manager',org:'Lexis Translations'},{quote:'His attention to register in our EU regulatory submissions was exactly what we needed. Meticulous and reliable.',author:'Compliance Lead',org:'FinTech GmbH'},{quote:'Translated our entire technical manual series from Italian to French with zero revision rounds. Exceptional accuracy.',author:'Head of Documentation',org:'LinguaNet Translations'},{quote:'We sent a rush job on a Friday evening and had a polished translation by Saturday morning. Highly recommended.',author:'Operations Director',org:'Mantas Translations'},{quote:'Omotola understood the engineering context immediately. The quality of terminology was way above what we expected.',author:'Senior PM',org:'Global LSP Partner'}]},
   {id:3,name:'Sofia Bianchi',role:'Literary & Cultural Translator',location:'Milan, Italy',img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500&q=80',web:'#',linkedin:'#',instagram:'#',facebook:'#',proz:'#',langs:['IT','EN','FR'],specs:['Literary','Cultural','Publishing','Arts'],bio:'Sofia translates literary works, cultural content, and editorial material. She has translated over 15 published novels and collaborates regularly with Italian and French publishing houses.',tools:['SDL Trados','OmegaT','MemoQ','Wordfast'],certs:['MA Literary Translation — SSLMIT Trieste','Publishing Certificate — Fondazione Mondadori'],exp:[{org:'Freelance',role:'Literary Translator',period:'2019–Present'},{org:'Mondadori',role:'Editorial Translator',period:'2011–2014'}]},
   {id:4,name:'Amara Ndiaye',role:'Certified Document Translator',location:'Berlin, Germany',img:'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=500&q=80',web:'#',linkedin:'#',instagram:'#',facebook:'#',proz:'#',langs:['FR','EN','DE'],specs:['Certified Docs','Civil Status','Immigration','Legal'],bio:'Amara specializes in the translation and certification of official documents — birth certificates, academic transcripts, immigration papers, and civil status documents.',tools:['SDL Trados Studio','Smartcat','MateCat'],certs:['State-Certified Translator — Germany','MA Law (Administrative) — Université de Dakar','Legal Translation Diploma — BDÜ'],exp:[{org:'Freelance',role:'Certified Document Translator',period:'2017–Present'},{org:'LinguaNet Translations',role:'Senior Multilingual Translator',period:'2024–2025'}]},
   {id:5,name:'Piotr Wiśniewski',role:'IT & Software Localization',location:'Warsaw, Poland',img:'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=500&q=80',web:'#',linkedin:'#',instagram:'#',facebook:'#',proz:'#',langs:['PL','EN','DE'],specs:['Software Localization','UI/UX','Tech Docs','Video Games'],bio:'Piotr is a localization engineer and translator with 7 years specializing in software, SaaS platforms, and video game localization.',tools:['Phrase','Lokalise','SDL Trados','Transifex','memoQ'],certs:['BSc Computer Science — Warsaw University','GALA Localization Certification','SDL Trados Certified User'],exp:[{org:'Freelance',role:'Localization Engineer & Translator',period:'2017–Present'},{org:'CD Projekt Red',role:'Junior Localization Specialist',period:'2016–2017'}]},
@@ -756,15 +792,65 @@ function card(t){
 function profile(t){
   const fn=t.name.split(' ')[0];
   const sozBtn=(k,path)=>`<a href="${t[k]||'#'}" target="_blank" style="width:38px;height:38px;border-radius:50%;border:0.5px solid var(--faint);background:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${path}</svg></a>`;
+
+  /* 1. Availability badge */
+  const availHTML = t.availability ? `
+    <div class="avail-badge ${t.availability.status}">
+      <span class="avail-dot"></span>
+      <span>${t.availability.label}</span>
+      ${t.availability.capacity ? `<span style="opacity:.6;font-weight:400">· ${t.availability.capacity}</span>` : ''}
+    </div>` : '';
+
+  /* 2. Volume stats row */
+  const statsHTML = t.stats ? `
+    <div class="profile-stats-row">
+      ${t.stats.map(s=>`<div class="pstat"><div class="pstat-num">${s.num}</div><div class="pstat-lbl">${s.lbl}</div></div>`).join('')}
+    </div>` : '';
+
+  /* 3. Mini testimonial carousel (after bio) */
+  const pid = 'mc-'+t.id;
+  const testimonialsHTML = t.profileTestimonials ? `
+    <div style="margin-top:1.35rem;margin-bottom:0">
+      <div style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.65rem">Client feedback</div>
+      <div class="mini-carousel" id="${pid}-wrap">
+        <div class="mini-track" id="${pid}-track">
+          ${t.profileTestimonials.map(q=>`
+            <div class="mini-slide">
+              <div class="mini-quote">"${q.quote}"</div>
+              <div class="mini-author">${q.author}</div>
+              <div class="mini-org">${q.org}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="mini-controls">
+        <button class="mini-btn" id="${pid}-prev">&#8592;</button>
+        <div class="mini-dots" id="${pid}-dots">
+          ${t.profileTestimonials.map((_,i)=>`<div class="mini-dot${i===0?' active':''}" onclick="miniGo('${pid}',${i},${t.profileTestimonials.length})"></div>`).join('')}
+        </div>
+        <button class="mini-btn" id="${pid}-next">&#8594;</button>
+      </div>
+      <div class="mini-timer"><div class="mini-timer-bar" id="${pid}-bar"></div></div>
+    </div>` : '';
+
+  /* 4. Rates sidebar card */
+  const ratesHTML = t.rates ? `
+    <div class="rates-card">
+      <h4>Rates &amp; turnaround</h4>
+      ${t.rates.map(r=>`<div class="rates-row"><span class="rates-label">${r.label}</span><span class="rates-val">${r.val}</span></div>`).join('')}
+    </div>` : '';
+
   return `
   <div class="profile-hero">
     <div class="profile-photo"><img src="${t.img}" alt="${t.name}"/></div>
     <div>
+      ${availHTML}
       <div class="profile-name">${t.name}</div>
       <div class="profile-role">${t.role} · <span style="color:var(--muted)">${t.location}</span></div>
       <div class="profile-langs">${t.langs.map(l=>`<span class="pill">${l}</span>`).join('')}${t.specs.map(s=>`<span class="pill">${s}</span>`).join('')}</div>
+      ${statsHTML}
       <div class="profile-bio">${t.bio}</div>
-      <div style="display:flex;align-items:center;gap:.55rem;margin-top:1.1rem;flex-wrap:wrap">
+      ${testimonialsHTML}
+      <div style="display:flex;align-items:center;gap:.55rem;margin-top:1.35rem;flex-wrap:wrap">
         <span class="btn btn-fill" onclick="showPage('contact')" style="padding:.6rem 1.25rem;font-size:.85rem">Work with ${fn}</span>
         ${sozBtn('web','<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>')}
         ${sozBtn('linkedin','<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>')}
@@ -778,11 +864,51 @@ function profile(t){
       ${t.exp.map(e=>`<div class="pei"><div class="pei-top"><div class="pei-org">${e.org}</div><div class="pei-period">${e.period}</div></div><div class="pei-role">${e.role}</div></div>`).join('')}
     </div>
     <div>
+      ${ratesHTML}
       <div class="sidebar-card"><h4>Qualifications</h4>${t.certs.map(c=>`<div class="cert-item"><div class="cert-dot"></div><div>${c}</div></div>`).join('')}</div>
       <div class="sidebar-card"><h4>CAT Tools</h4><div class="tools-list">${t.tools.map(x=>`<span class="pill">${x}</span>`).join('')}</div></div>
     </div>
   </div>`;
 }
+
+/* Mini carousel controller */
+const _miniIdx={};
+const _miniTimers={};
+const MINI_DURATION=10000;
+
+function miniGo(pid,n,total){
+  _miniIdx[pid]=((n%total)+total)%total;
+  document.getElementById(pid+'-track').style.transform=`translateX(-${_miniIdx[pid]*100}%)`;
+  document.querySelectorAll(`#${pid}-dots .mini-dot`).forEach((d,i)=>d.classList.toggle('active',i===_miniIdx[pid]));
+  miniResetTimer(pid,total);
+}
+
+function miniResetTimer(pid,total){
+  if(_miniTimers[pid]) clearTimeout(_miniTimers[pid]);
+  const bar=document.getElementById(pid+'-bar');
+  if(!bar) return;
+  bar.style.transition='none';
+  bar.style.width='0%';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    bar.style.transition=`width ${MINI_DURATION}ms linear`;
+    bar.style.width='100%';
+  }));
+  _miniTimers[pid]=setTimeout(()=>{
+    miniGo(pid,(_miniIdx[pid]||0)+1,total);
+  },MINI_DURATION);
+}
+
+function miniStart(pid){
+  const total=document.querySelectorAll(`#${pid}-dots .mini-dot`).length;
+  if(total>0) miniResetTimer(pid,total);
+}
+
+document.addEventListener('click',e=>{
+  const prev=e.target.closest('[id$="-prev"]');
+  const next=e.target.closest('[id$="-next"]');
+  if(prev){const pid=prev.id.replace('-prev','');const total=document.querySelectorAll(`#${pid}-dots .mini-dot`).length;miniGo(pid,(_miniIdx[pid]||0)-1,total);}
+  if(next){const pid=next.id.replace('-next','');const total=document.querySelectorAll(`#${pid}-dots .mini-dot`).length;miniGo(pid,(_miniIdx[pid]||0)+1,total);}
+});
 
 document.getElementById('photo-row').innerHTML=T.map(t=>`<div class="photo-thumb" onclick="showProfile(${t.id})"><img src="${t.img}" alt="${t.name}" loading="lazy"/><div class="pt-name">${t.name}</div></div>`).join('');
 document.getElementById('home-translators').innerHTML=T.slice(0,4).map(card).join('');
@@ -808,6 +934,8 @@ function showProfile(id){
   document.getElementById('profile-content').innerHTML=profile(t);
   document.getElementById('breadcrumb-name').textContent=t.name;
   showPage('profile');
+  const pid='mc-'+id;
+  if(document.getElementById(pid+'-bar')) miniStart(pid);
 }
 function toggleMenu(){
   document.getElementById('ham').classList.toggle('open');
