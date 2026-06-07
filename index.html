@@ -18,7 +18,7 @@
 <meta property="og:title" content="ELiTE Language Craft | Professional Translation Collective"/>
 <meta property="og:description" content="ELiTE Language Craft is a collective of independent professional translators dedicated to delivering precise, culturally informed translations that convey real meaning across legal, academic, technical, and creative fields."/>
 <meta property="og:url" content="https://elitelanguagecraft.com/"/>
-<meta property="og:image" content="https://res.cloudinary.com/dqst0quc5/image/upload/v1780871623/2026-06-07_22_56_36-Elite_Language_Craft_zhfbvg.png"/>
+<meta property="og:image" content="https://res.cloudinary.com/dqst0quc5/image/upload/v1780869552/2026-06-07_22_56_36-Elite_Language_Craft_zhfbvg.png"/>
 <meta property="og:image:alt" content="ELiTE Language Craft — Professional Translation Collective"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
@@ -155,6 +155,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(249,248,244,0.95);backdrop
 .form-group label{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .form-group input,.form-group select,.form-group textarea{background:var(--white);border:0.5px solid #ccc;border-radius:var(--radius);padding:.6rem .85rem;font-family:var(--sans);font-size:.9rem;color:var(--ink);outline:none;transition:border-color .2s;width:100%}
 .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--ink)}
+.form-group select:disabled{background:#f3f2ee;color:#aaa;cursor:not-allowed;border-color:#e0ddd6}
 .form-group textarea{resize:vertical;min-height:95px}
 
 .profile-hero{max-width:var(--max);margin:0 auto;padding:2.5rem 1.5rem 3.5rem;display:grid;grid-template-columns:260px 1fr;gap:3rem;align-items:start;box-sizing:border-box;width:100%;overflow:hidden}
@@ -492,7 +493,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.4);font-size:.8rem;padding:
         <p>A collective of specialist translators committed to precision, cultural intelligence, and language that truly resonates.</p>
         <div style="display:flex;gap:.85rem;flex-wrap:wrap">
           <span class="btn btn-white" onclick="showPage('translators')">Meet the translators</span>
-          <span class="btn btn-light" onclick="showPage('contact')">Work with us</span>
+          <span class="btn btn-light" onclick="showPage('contact')">Get in Touch</span>
         </div>
       </div>
       <div class="hero-mosaic">
@@ -741,24 +742,30 @@ footer{background:var(--ink);color:rgba(255,255,255,.4);font-size:.8rem;padding:
     <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1400&q=75')"></div>
     <div class="page-hero-content">
       <div class="page-hero-label">Get in touch</div>
-      <div class="page-hero-title">Let's work together.</div>
-      <div class="page-hero-sub">Tell us about your project and we'll connect you with the right translator.</div>
+      <div class="page-hero-title">How can we help you?</div>
+      <div class="page-hero-sub">Request a service, send an enquiry, or log a complaint — we respond to every message within 24 hours.</div>
     </div>
   </div>
   <div class="section">
     <div class="contact-wrap">
       <div class="contact-info">
-        <h3>Tell us about your project.</h3>
-        <p>Whether you need a certified translation, localization support, or a long-term language partner — we'd love to hear from you.</p>
-        <div class="contact-item">📍 Germany & remote worldwide</div>
-        <div class="contact-item">🕒 Response within 24 hours</div>
+        <h3>We’re here for you.</h3>
+        <p>Whether you’re ready to start a translation project, have a question about our services, or want to raise a concern — tell us what you need and we’ll route your message to the right person.</p>
+
+        <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:.5rem">
+          <div class="contact-item">📍 Germany &amp; remote worldwide</div>
+          <div class="contact-item">🕐 Response within 24 hours</div>
+        </div>
+
         <div style="margin-top:1.25rem;padding:1rem 1.1rem;background:var(--accent-light);border-radius:var(--radius)">
           <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.35rem">Note</div>
-          <div style="font-size:.8rem;line-height:1.75;color:var(--muted)">We are a collective of independent translators, not an agency. We'll connect you directly with the most suitable member.</div>
+          <div style="font-size:.8rem;line-height:1.75;color:var(--muted)">We are a collective of independent translators, not an agency. We’ll connect you directly with the most suitable member for your needs.</div>
         </div>
       </div>
       <div>
         <form id="contact-form" class="contact-form">
+
+          <!-- Name row -->
           <div class="form-row">
             <div class="form-group">
               <label for="cf-first">First name</label>
@@ -769,95 +776,78 @@ footer{background:var(--ink);color:rgba(255,255,255,.4);font-size:.8rem;padding:
               <input id="cf-last" type="text" name="last_name" placeholder="Dupont"/>
             </div>
           </div>
+
+          <!-- Email -->
           <div class="form-group">
             <label for="cf-email">Email</label>
             <input id="cf-email" type="email" name="email" placeholder="jane@company.com" required/>
           </div>
+
+          <!-- Request type -->
           <div class="form-group">
-            <label for="cf-service">Service needed</label>
-            <select id="cf-service" name="service">
-              <option>Document translation</option>
-              <option>Legal translation</option>
-              <option>Academic translation</option>
-              <option>Technical translation</option>
-              <option>MT post-editing</option>
-              <option>Subtitling / transcription</option>
-              <option>Certified translation</option>
-              <option>Other</option>
+            <label for="cf-request-type">Request type</label>
+            <select id="cf-request-type" name="request_type" required>
+              <option value="" disabled selected>&#8212; Select a request type &#8212;</option>
+              <option value="Service Request">Service Request</option>
+              <option value="General Enquiry">General Enquiry</option>
+              <option value="Complaint">Complaint</option>
             </select>
           </div>
-          <div class="form-row">
+
+          <!-- Service fields: always visible, disabled unless Service Request -->
+          <div id="cf-service-fields" style="display:flex;flex-direction:column;gap:.8rem;transition:opacity .25s">
             <div class="form-group">
-              <label for="cf-source">Source language</label>
-              <select id="cf-source" name="source_language">
-                <option>English</option><option>French</option><option>German</option><option>Italian</option><option>Spanish</option><option>Other</option>
+              <label for="cf-service">Type of service</label>
+              <select id="cf-service" name="service_type" disabled>
+                <option value="" disabled selected>&#8212; Select a service &#8212;</option>
+                <option>Document Translation</option>
+                <option>Legal Translation</option>
+                <option>Academic Translation</option>
+                <option>Technical Translation</option>
+                <option>MT Post-Editing</option>
+                <option>Subtitling / Transcription</option>
+                <option>Certified Translation</option>
+                <option>Localisation</option>
+                <option>Other</option>
               </select>
             </div>
-            <div class="form-group">
-              <label for="cf-target">Target language</label>
-              <select id="cf-target" name="target_language">
-                <option>German</option><option>English</option><option>French</option><option>Italian</option><option>Spanish</option><option>Other</option>
-              </select>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cf-source">Source language</label>
+                <select id="cf-source" name="source_language" disabled>
+                  <option value="" disabled selected>&#8212; Select &#8212;</option>
+                  <option>English</option><option>French</option><option>German</option>
+                  <option>Italian</option><option>Spanish</option><option>Japanese</option>
+                  <option>Polish</option><option>Portuguese</option>
+                  <option>Chinese (Simplified)</option><option>Chinese (Traditional)</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="cf-target">Target language</label>
+                <select id="cf-target" name="target_language" disabled>
+                  <option value="" disabled selected>&#8212; Select &#8212;</option>
+                  <option>English</option><option>French</option><option>German</option>
+                  <option>Italian</option><option>Spanish</option><option>Japanese</option>
+                  <option>Polish</option><option>Portuguese</option>
+                  <option>Chinese (Simplified)</option><option>Chinese (Traditional)</option>
+                  <option>Other</option>
+                </select>
+              </div>
             </div>
           </div>
+
+          <!-- Message -->
           <div class="form-group">
             <label for="cf-message">Message</label>
-            <textarea id="cf-message" name="message" placeholder="Tell us about your project..." required></textarea>
+            <textarea id="cf-message" name="message" placeholder="How can we help you?" required></textarea>
           </div>
-          <button type="submit" id="cf-submit" class="btn btn-fill" style="width:100%;text-align:center;padding:.8rem;font-size:.9rem">Send message</button>
+
+          <button type="submit" id="cf-submit" class="btn btn-fill" style="width:100%;text-align:center;padding:.8rem;font-size:.9rem">Submit</button>
           <div id="cf-feedback" style="display:none;margin-top:.9rem;padding:1rem 1.2rem;border-radius:var(--radius);font-size:.88rem;line-height:1.75;opacity:0;transition:opacity .35s ease"></div>
         </form>
-        <script>
-        (function(){
-          var form = document.getElementById('contact-form');
-          var btn  = document.getElementById('cf-submit');
-          var fb   = document.getElementById('cf-feedback');
 
-          function showFeedback(ok, msg){
-            fb.innerHTML = msg;
-            fb.style.display = 'block';
-            fb.style.background   = ok ? '#d1fae5' : '#fee2e2';
-            fb.style.border       = ok ? '0.5px solid #6ee7b7' : '0.5px solid #fca5a5';
-            fb.style.color        = ok ? '#065f46' : '#991b1b';
-            requestAnimationFrame(function(){ fb.style.opacity = '1'; });
-          }
-
-          form.addEventListener('submit', function(e){
-            e.preventDefault();
-            btn.disabled    = true;
-            btn.textContent = 'Sending…';
-            fb.style.opacity = '0';
-            fb.style.display = 'none';
-
-            var data = new FormData(form);
-
-            fetch('https://formspree.io/f/mqeopqqn', {
-              method:  'POST',
-              headers: { 'Accept': 'application/json' },
-              body:    data
-            })
-            .then(function(res){ return res.json().then(function(j){ return {ok: res.ok, json: j}; }); })
-            .then(function(r){
-              if(r.ok){
-                showFeedback(true, '✅ <strong>Message sent!</strong> Thank you for reaching out — we\'ll be in touch within 24 hours.');
-                form.reset();
-                btn.textContent = 'Message sent';
-                setTimeout(function(){ btn.disabled = false; btn.textContent = 'Send message'; }, 4000);
-              } else {
-                var errs = r.json.errors ? r.json.errors.map(function(e){ return e.message; }).join(', ') : 'Something went wrong.';
-                showFeedback(false, '⚠️ <strong>Couldn\'t send your message.</strong> ' + errs + ' Please try again or email us directly.');
-                btn.disabled = false;
-                btn.textContent = 'Send message';
-              }
-            })
-            .catch(function(){
-              showFeedback(false, '⚠️ <strong>Network error.</strong> Please check your connection and try again.');
-              btn.disabled = false;
-              btn.textContent = 'Send message';
-            });
-          });
-        })();
-        </script>
+      </div>
       </div>
     </div>
   </div>
@@ -1470,6 +1460,114 @@ cTrack.addEventListener('touchend',e=>{const dx=tx-e.changedTouches[0].clientX;i
   resize();
   for(let i=0;i<4;i++) setTimeout(spawnPulse, i*250);
   requestAnimationFrame(draw);
+})();
+</script>
+
+<!-- ═══ Contact Form Logic ═══ -->
+<script>
+(function initContactForm() {
+  var reqType   = document.getElementById('cf-request-type');
+  var svcFields = document.getElementById('cf-service-fields');
+  var svcSelect = document.getElementById('cf-service');
+  var srcSelect = document.getElementById('cf-source');
+  var tgtSelect = document.getElementById('cf-target');
+  var msgArea   = document.getElementById('cf-message');
+  var btn       = document.getElementById('cf-submit');
+  var fb        = document.getElementById('cf-feedback');
+  var form      = document.getElementById('contact-form');
+
+  if (!reqType) return; // safety guard
+
+  var placeholders = {
+    'Service Request': 'Please describe your project — document type, word count, deadline, and any special requirements.',
+    'General Enquiry': "What would you like to know? We'll get back to you within 24 hours.",
+    'Complaint':       'Please describe your concern in as much detail as possible so we can resolve it promptly.'
+  };
+
+  var btnLabels = {
+    'Service Request': 'Request Service',
+    'General Enquiry': 'Send Enquiry',
+    'Complaint':       'Submit Complaint'
+  };
+
+  function setServiceFields(on) {
+    svcSelect.disabled = !on;
+    srcSelect.disabled = !on;
+    tgtSelect.disabled = !on;
+    svcSelect.required = on;
+    srcSelect.required = on;
+    tgtSelect.required = on;
+    svcFields.style.opacity = on ? '1' : '0.45';
+    if (!on) {
+      svcSelect.selectedIndex = 0;
+      srcSelect.selectedIndex = 0;
+      tgtSelect.selectedIndex = 0;
+    }
+  }
+
+  // Set initial disabled state
+  setServiceFields(false);
+
+  reqType.addEventListener('change', function() {
+    var v = this.value;
+    setServiceFields(v === 'Service Request');
+    msgArea.placeholder = placeholders[v] || 'How can we help you?';
+    btn.textContent = btnLabels[v] || 'Submit';
+  });
+
+  function showFeedback(ok, msg) {
+    fb.innerHTML = msg;
+    fb.style.display    = 'block';
+    fb.style.background = ok ? '#d1fae5' : '#fee2e2';
+    fb.style.border     = ok ? '0.5px solid #6ee7b7' : '0.5px solid #fca5a5';
+    fb.style.color      = ok ? '#065f46' : '#991b1b';
+    requestAnimationFrame(function(){ fb.style.opacity = '1'; });
+  }
+
+  function successMsg(type) {
+    if (type === 'Service Request') return '&#9989; <strong>Service request received!</strong> We\'ll review your details and connect you with the right translator within 24 hours.';
+    if (type === 'Complaint')       return '&#9989; <strong>Complaint logged.</strong> We take all feedback seriously and will respond within 24 hours.';
+    return '&#9989; <strong>Enquiry sent!</strong> Thank you for reaching out — we\'ll be in touch within 24 hours.';
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var type = reqType.value;
+    btn.disabled     = true;
+    btn.textContent  = 'Sending\u2026';
+    fb.style.opacity = '0';
+    fb.style.display = 'none';
+
+    var data = new FormData(form);
+    data.append('_subject', 'ELiTE Language Craft \u2014 ' + (type || 'Submission'));
+
+    fetch('https://formspree.io/f/mqeopqqn', {
+      method:  'POST',
+      headers: { 'Accept': 'application/json' },
+      body:    data
+    })
+    .then(function(res) { return res.json().then(function(j) { return { ok: res.ok, json: j }; }); })
+    .then(function(r) {
+      if (r.ok) {
+        showFeedback(true, successMsg(type));
+        form.reset();
+        setServiceFields(false);
+        msgArea.placeholder = 'How can we help you?';
+        btn.textContent = 'Submit';
+        setTimeout(function() { btn.disabled = false; }, 4000);
+      } else {
+        var errs = r.json.errors ? r.json.errors.map(function(err) { return err.message; }).join(', ') : 'Something went wrong.';
+        showFeedback(false, '&#9888;&#65039; <strong>Couldn\'t send your message.</strong> ' + errs + ' Please try again or email us directly.');
+        btn.disabled = false;
+        btn.textContent = btnLabels[type] || 'Submit';
+      }
+    })
+    .catch(function() {
+      showFeedback(false, '&#9888;&#65039; <strong>Network error.</strong> Please check your connection and try again.');
+      btn.disabled = false;
+      btn.textContent = btnLabels[type] || 'Submit';
+    });
+  });
 })();
 </script>
 </body>
