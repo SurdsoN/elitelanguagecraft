@@ -725,22 +725,106 @@ footer{background:var(--ink);color:rgba(255,255,255,.4);font-size:.8rem;padding:
         </div>
       </div>
       <div>
-        <div class="contact-form">
+        <form id="contact-form" class="contact-form">
           <div class="form-row">
-            <div class="form-group"><label>First name</label><input type="text" placeholder="Jane"/></div>
-            <div class="form-group"><label>Last name</label><input type="text" placeholder="Dupont"/></div>
+            <div class="form-group">
+              <label for="cf-first">First name</label>
+              <input id="cf-first" type="text" name="first_name" placeholder="Jane" required/>
+            </div>
+            <div class="form-group">
+              <label for="cf-last">Last name</label>
+              <input id="cf-last" type="text" name="last_name" placeholder="Dupont"/>
+            </div>
           </div>
-          <div class="form-group"><label>Email</label><input type="email" placeholder="jane@company.com"/></div>
-          <div class="form-group"><label>Service needed</label>
-            <select><option>Document translation</option><option>Legal translation</option><option>Academic translation</option><option>Technical translation</option><option>MT post-editing</option><option>Subtitling / transcription</option><option>Certified translation</option><option>Other</option></select>
+          <div class="form-group">
+            <label for="cf-email">Email</label>
+            <input id="cf-email" type="email" name="email" placeholder="jane@company.com" required/>
+          </div>
+          <div class="form-group">
+            <label for="cf-service">Service needed</label>
+            <select id="cf-service" name="service">
+              <option>Document translation</option>
+              <option>Legal translation</option>
+              <option>Academic translation</option>
+              <option>Technical translation</option>
+              <option>MT post-editing</option>
+              <option>Subtitling / transcription</option>
+              <option>Certified translation</option>
+              <option>Other</option>
+            </select>
           </div>
           <div class="form-row">
-            <div class="form-group"><label>Source language</label><select><option>English</option><option>French</option><option>German</option><option>Italian</option><option>Spanish</option><option>Other</option></select></div>
-            <div class="form-group"><label>Target language</label><select><option>German</option><option>English</option><option>French</option><option>Italian</option><option>Spanish</option><option>Other</option></select></div>
+            <div class="form-group">
+              <label for="cf-source">Source language</label>
+              <select id="cf-source" name="source_language">
+                <option>English</option><option>French</option><option>German</option><option>Italian</option><option>Spanish</option><option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="cf-target">Target language</label>
+              <select id="cf-target" name="target_language">
+                <option>German</option><option>English</option><option>French</option><option>Italian</option><option>Spanish</option><option>Other</option>
+              </select>
+            </div>
           </div>
-          <div class="form-group"><label>Message</label><textarea placeholder="Tell us about your project..."></textarea></div>
-          <button class="btn btn-fill" style="width:100%;text-align:center;padding:.8rem;font-size:.9rem" onclick="alert('Connect a backend to activate.')">Send message</button>
-        </div>
+          <div class="form-group">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" placeholder="Tell us about your project..." required></textarea>
+          </div>
+          <button type="submit" id="cf-submit" class="btn btn-fill" style="width:100%;text-align:center;padding:.8rem;font-size:.9rem">Send message</button>
+          <div id="cf-feedback" style="display:none;margin-top:.9rem;padding:1rem 1.2rem;border-radius:var(--radius);font-size:.88rem;line-height:1.75;opacity:0;transition:opacity .35s ease"></div>
+        </form>
+        <script>
+        (function(){
+          var form = document.getElementById('contact-form');
+          var btn  = document.getElementById('cf-submit');
+          var fb   = document.getElementById('cf-feedback');
+
+          function showFeedback(ok, msg){
+            fb.innerHTML = msg;
+            fb.style.display = 'block';
+            fb.style.background   = ok ? '#d1fae5' : '#fee2e2';
+            fb.style.border       = ok ? '0.5px solid #6ee7b7' : '0.5px solid #fca5a5';
+            fb.style.color        = ok ? '#065f46' : '#991b1b';
+            requestAnimationFrame(function(){ fb.style.opacity = '1'; });
+          }
+
+          form.addEventListener('submit', function(e){
+            e.preventDefault();
+            btn.disabled    = true;
+            btn.textContent = 'Sending…';
+            fb.style.opacity = '0';
+            fb.style.display = 'none';
+
+            var data = new FormData(form);
+
+            fetch('https://formspree.io/f/mqeopqqn', {
+              method:  'POST',
+              headers: { 'Accept': 'application/json' },
+              body:    data
+            })
+            .then(function(res){ return res.json().then(function(j){ return {ok: res.ok, json: j}; }); })
+            .then(function(r){
+              if(r.ok){
+                showFeedback(true, '✅ <strong>Message sent!</strong> Thank you for reaching out — we\'ll be in touch within 24 hours.');
+                form.reset();
+                btn.textContent = 'Message sent';
+                setTimeout(function(){ btn.disabled = false; btn.textContent = 'Send message'; }, 4000);
+              } else {
+                var errs = r.json.errors ? r.json.errors.map(function(e){ return e.message; }).join(', ') : 'Something went wrong.';
+                showFeedback(false, '⚠️ <strong>Couldn\'t send your message.</strong> ' + errs + ' Please try again or email us directly.');
+                btn.disabled = false;
+                btn.textContent = 'Send message';
+              }
+            })
+            .catch(function(){
+              showFeedback(false, '⚠️ <strong>Network error.</strong> Please check your connection and try again.');
+              btn.disabled = false;
+              btn.textContent = 'Send message';
+            });
+          });
+        })();
+        </script>
       </div>
     </div>
   </div>
